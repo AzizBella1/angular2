@@ -1,0 +1,87 @@
+<app-navbar *ngIf="idUser!=null && is_admin==0"></app-navbar>
+
+<div *ngIf="idUser!=null && is_admin==0" class="container mt-5">
+
+    <div class="col-md-12  table-responsive">
+        <div class="form-group m-4 row">
+            <label class="col-sm-2  col-form-label" for="ville">Ville</label>
+            <div class="col-sm-5">
+                <select [(ngModel)]="selectedville"  (change)="afficherTest()" class="form-control" name="ville" id="">
+                    <option value="-1">-</option>
+                    <option value="0">All</option>
+                    <option *ngFor="let item of ville" [value]="item.id">{{item.title}}</option>
+                </select>
+                
+            </div>
+            {{idUser}}
+            </div>
+
+        <div *ngIf="!selected" class="alert alert-primary text-center">
+            <strong>Choisir une Ville</strong>
+        </div>
+        <table *ngIf="selected" class="table table-bordered border-light">
+            <thead>
+                <tr>
+                    <th>Num Reclamation</th>
+                    <th>User</th>
+                    <th>Ville</th>
+                    <th>Véhicule</th>
+                    <th>Produit</th>
+                    <th>Probleme</th>
+                    <th>Solution</th>
+                    <th>Description</th>
+                    <th>Statut</th>
+                    <th>Date Reclamation</th>
+                    <th>Date Modification</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of forms">
+                    <td *ngIf="item.statut==0" class="table-warning"   >{{item.id}}</td>
+                    <td *ngIf="item.statut==0" class="table-warning"  >{{item.username}}</td>
+                    <td *ngIf="item.statut==0" class="table-warning"  >{{item.ville}}</td>
+                    <td *ngIf="item.statut==0" class="table-warning"  >{{item.vehicule}}</td>
+                    <td *ngIf="item.statut==0" class="table-warning"  >{{item.produit}}</td>
+                    <td *ngIf="item.statut==0" class="table-warning"  >{{item.probleme}}</td>
+                    <td *ngIf="item.statut==0" class="table-warning"  >{{item.solution}}</td>
+                    <td *ngIf="item.statut==0" class="table-warning"  >{{item.description}}</td>
+                    <td *ngIf="item.statut==0" class="table-warning"  >En cours</td>
+                    <td *ngIf="item.statut==0" class="table-warning"  >{{item.dateCreation | date:'yyyy-MM-dd'}}</td>
+                    <td *ngIf="item.statut==0" class="table-warning"  >{{item.dateModification | date:'yyyy-MM-dd'}}</td>
+                    <td *ngIf="item.statut==0" class="table-warning"   [ngSwitch]="item.statut"><a  type="button"   class="btn btn-info" href="mod/{{item.id}}/{{item.villeId}}" >Modifier</a></td>
+                    <td *ngIf="item.statut==1" >{{item.id}}</td>
+                    <td *ngIf="item.statut==1">{{item.username}}</td>
+                    <td *ngIf="item.statut==1">{{item.ville}}</td>
+                    <td *ngIf="item.statut==1">{{item.vehicule}}</td>
+                    <td *ngIf="item.statut==1">{{item.produit}}</td>
+                    <td *ngIf="item.statut==1">{{item.probleme}}</td>
+                    <td *ngIf="item.statut==1">{{item.solution}}</td>
+                    <td *ngIf="item.statut==1">{{item.description}}</td>
+                    <td *ngIf="item.statut==1">Traité</td>
+                    <td *ngIf="item.statut==1">{{item.dateCreation | date:'yyyy-MM-dd'}}</td>
+                    <td *ngIf="item.statut==1">{{item.dateModification | date:'yyyy-MM-dd'}}</td>
+                    <td *ngIf="item.statut==1" [ngSwitch]="item.statut"><a  type="button"  class="btn btn-info" href="mod/{{item.id}}/{{item.villeId}}" >Modifier</a></td>
+                    <td class="table-secondary" *ngIf="item.statut==2" >{{item.id}}</td>
+                    <td class="table-secondary" *ngIf="item.statut==2">{{item.username}}</td>
+                    <td class="table-secondary" *ngIf="item.statut==2">{{item.ville}}</td>
+                    <td class="table-secondary" *ngIf="item.statut==2">{{item.vehicule}}</td>
+                    <td class="table-secondary" *ngIf="item.statut==2">{{item.produit}}</td>
+                    <td class="table-secondary" *ngIf="item.statut==2">{{item.probleme}}</td>
+                    <td class="table-secondary" *ngIf="item.statut==2">{{item.solution}}</td>
+                    <td class="table-secondary" *ngIf="item.statut==2">{{item.description}}</td>
+                    <td class="table-secondary" *ngIf="item.statut==2">Valider</td>
+                    <td class="table-secondary" *ngIf="item.statut==2">{{item.dateCreation | date:'yyyy-MM-dd'}}</td>
+                    <td class="table-secondary" *ngIf="item.statut==2">{{item.dateModification | date:'yyyy-MM-dd'}}</td>
+                    <td class="table-secondary" *ngIf="item.statut==2" [ngSwitch]="item.statut"></td>
+                    
+                </tr>
+        
+            </tbody>
+        </table>
+    </div>
+
+    
+</div>
+
+
+

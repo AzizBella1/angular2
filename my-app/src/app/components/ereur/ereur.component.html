@@ -1,0 +1,19 @@
+
+<input type="file" class="file-upload" (change)="binary($event)">
+<input type="button"  value="upload">
+<hr>
+<input id="item" type="file" class="file-input"
+       (change)="onFileSelected($event)" #fileUpload>
+
+<div class="file-upload">
+ 
+
+    <button mat-mini-fab color="primary" class="upload-btn"
+      (click)="fileUpload.click()">
+         attach_file 
+    </button>
+</div>
+<hr>
+<input type="file" class="file-upload" (change)="image($event)">
+<img [src]="file?.value">
+

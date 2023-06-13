@@ -1,0 +1,623 @@
+{
+  "ville": [
+    {
+      "id": 1,
+      "title": "Casa"
+    },
+    {
+      "id": 2,
+      "title": "Rabat"
+    },
+    {
+      "id": 3,
+      "title": "Tanger"
+    },
+    {
+      "title": "Fes",
+      "id": 4
+    },
+    {
+      "title": "Agadir",
+      "id": 5
+    }
+  ],
+  "vehicule": [
+    {
+      "id": 1,
+      "title": "CV001",
+      "villeId": 1
+    },
+    {
+      "id": 2,
+      "title": "CV002",
+      "villeId": 1
+    },
+    {
+      "id": 3,
+      "title": "CV003",
+      "villeId": 1
+    },
+    {
+      "title": "CV004",
+      "id": 4
+    },
+    {
+      "id": 5,
+      "title": "CV005",
+      "villeId": 1
+    },
+    {
+      "id": 6,
+      "title": "CV006",
+      "villeId": 1
+    },
+    {
+      "id": 7,
+      "title": "CV007",
+      "villeId": 1
+    },
+    {
+      "id": 8,
+      "title": "CV008",
+      "villeId": 1
+    },
+    {
+      "id": 9,
+      "title": "CV009",
+      "villeId": 1
+    },
+    {
+      "id": 10,
+      "title": "CV010",
+      "villeId": 1
+    },
+    {
+      "id": 11,
+      "title": "RV001",
+      "villeId": 2
+    },
+    {
+      "id": 12,
+      "title": "RV002",
+      "villeId": 2
+    },
+    {
+      "id": 13,
+      "title": "RV003",
+      "villeId": 2
+    },
+    {
+      "id": 14,
+      "title": "RV004",
+      "villeId": 2
+    },
+    {
+      "id": 15,
+      "title": "RV005",
+      "villeId": 2
+    },
+    {
+      "id": 16,
+      "title": "RV006",
+      "villeId": 2
+    },
+    {
+      "id": 17,
+      "title": "RV007",
+      "villeId": 2
+    },
+    {
+      "id": 18,
+      "title": "RV008",
+      "villeId": 2
+    },
+    {
+      "id": 19,
+      "title": "RV009",
+      "villeId": 2
+    },
+    {
+      "id": 20,
+      "title": "RV010",
+      "villeId": 2
+    },
+    {
+      "id": 21,
+      "title": "TV001",
+      "villeId": 3
+    },
+    {
+      "id": 22,
+      "title": "TV002",
+      "villeId": 3
+    },
+    {
+      "id": 23,
+      "title": "TV003",
+      "villeId": 3
+    },
+    {
+      "id": 24,
+      "title": "TV004",
+      "villeId": 3
+    },
+    {
+      "id": 25,
+      "title": "TV005",
+      "villeId": 3
+    },
+    {
+      "id": 26,
+      "title": "TV006",
+      "villeId": 3
+    },
+    {
+      "id": 27,
+      "title": "TV007",
+      "villeId": 3
+    },
+    {
+      "id": 28,
+      "title": "TV008",
+      "villeId": 3
+    },
+    {
+      "id": 29,
+      "title": "TV009",
+      "villeId": 3
+    },
+    {
+      "id": 30,
+      "title": "TV010",
+      "villeId": 3
+    },
+    {
+      "title": "CV012",
+      "villeId": "1",
+      "id": 32
+    },
+    {
+      "title": "FV002",
+      "villeId": "4",
+      "id": 36
+    },
+    {
+      "title": "AV",
+      "villeId": "5",
+      "id": 37
+    },
+    {
+      "title": "RV011",
+      "villeId": "2",
+      "id": 38
+    },
+    {
+      "title": "FV001",
+      "villeId": "4",
+      "id": 39
+    }
+  ],
+  "produit": [
+    {
+      "id": 1,
+      "title": "produit1"
+    },
+    {
+      "id": 2,
+      "title": "produit2"
+    },
+    {
+      "id": 3,
+      "title": "produit3"
+    },
+    {
+      "id": 4,
+      "title": "produit4"
+    },
+    {
+      "id": 5,
+      "title": "produit5"
+    },
+    {
+      "id": 6,
+      "title": "produit6"
+    },
+    {
+      "id": 7,
+      "title": "produit7"
+    },
+    {
+      "id": 8,
+      "title": "produit8"
+    },
+    {
+      "id": 9,
+      "title": "produit9"
+    },
+    {
+      "id": 10,
+      "title": "produit10"
+    }
+  ],
+  "probleme": [
+    {
+      "id": 1,
+      "title": "probleme1",
+      "produitId": 1
+    },
+    {
+      "id": 2,
+      "title": "probleme2",
+      "produitId": 1
+    },
+    {
+      "id": 3,
+      "title": "probleme3",
+      "produitId": 1
+    },
+    {
+      "id": 4,
+      "title": "probleme4",
+      "produitId": 1
+    },
+    {
+      "id": 5,
+      "title": "probleme5",
+      "produitId": 1
+    },
+    {
+      "id": 6,
+      "title": "probleme6",
+      "produitId": 1
+    },
+    {
+      "id": 7,
+      "title": "probleme7",
+      "produitId": 1
+    },
+    {
+      "id": 8,
+      "title": "probleme8",
+      "produitId": 1
+    },
+    {
+      "id": 9,
+      "title": "probleme9",
+      "produitId": 1
+    },
+    {
+      "id": 10,
+      "title": "probleme10",
+      "produitId": 1
+    }
+  ],
+  "solution": [
+    {
+      "id": 1,
+      "title": "sol1",
+      "problemeId": 1
+    },
+    {
+      "id": 2,
+      "title": "sol2",
+      "problemeId": 1
+    },
+    {
+      "id": 3,
+      "title": "sol3",
+      "problemeId": 1
+    },
+    {
+      "id": 4,
+      "title": "sol4",
+      "problemeId": 1
+    },
+    {
+      "id": 5,
+      "title": "sol5",
+      "problemeId": 1
+    },
+    {
+      "id": 6,
+      "title": "sol6",
+      "problemeId": 1
+    },
+    {
+      "id": 7,
+      "title": "sol7",
+      "problemeId": 1
+    },
+    {
+      "id": 8,
+      "title": "sol8",
+      "problemeId": 1
+    },
+    {
+      "id": 9,
+      "title": "sol9",
+      "problemeId": 1
+    },
+    {
+      "id": 10,
+      "title": "sol10",
+      "problemeId": 1
+    }
+  ],
+  "reclamation": [
+    {
+      "vehiculeId": "1",
+      "user": 1,
+      "villeId": "1",
+      "produitId": "1",
+      "problemeId": "1",
+      "solutionId": "1",
+      "description": "11110111",
+      "statut": 1,
+      "dateCreation": "2023-06-01T15:59:57.269Z",
+      "id": 1,
+      "dateModification": "2023-06-13T09:02:16.945Z"
+    },
+    {
+      "vehiculeId": "22",
+      "user": 1,
+      "villeId": "3",
+      "produitId": "2",
+      "problemeId": "3",
+      "solutionId": "4",
+      "description": "probleme",
+      "statut": 1,
+      "dateCreation": "2023-06-01T16:05:42.722Z",
+      "id": 2,
+      "dateModification": "2023-06-06T11:10:22.420Z"
+    },
+    {
+      "vehiculeId": "21",
+      "user": 1,
+      "villeId": "3",
+      "produitId": "1",
+      "problemeId": "1",
+      "solutionId": 0,
+      "description": "mod",
+      "statut": 1,
+      "dateCreation": "2023-06-01T16:30:19.623Z",
+      "id": 3
+    },
+    {
+      "vehiculeId": "13",
+      "user": 1,
+      "villeId": "2",
+      "produitId": "4",
+      "problemeId": "3",
+      "solutionId": "5",
+      "description": "tert",
+      "statut": 1,
+      "dateCreation": "2023-06-01T16:31:21.900Z",
+      "id": 4
+    },
+    {
+      "vehiculeId": "2",
+      "user": 1,
+      "villeId": "1",
+      "produitId": "3",
+      "problemeId": "3",
+      "solutionId": "1",
+      "description": "sol1 pour prob3",
+      "statut": 0,
+      "dateCreation": "2023-06-01T16:31:33.887Z",
+      "id": 5
+    },
+    {
+      "vehiculeId": "12",
+      "user": 1,
+      "villeId": "2",
+      "produitId": "2",
+      "problemeId": "1",
+      "solutionId": "3",
+      "description": "*",
+      "statut": 1,
+      "dateCreation": "2023-06-05T10:35:06.439Z",
+      "id": 6,
+      "dateModification": "2023-06-05T11:14:03.315Z"
+    },
+    {
+      "vehiculeId": "22",
+      "user": 1,
+      "villeId": "3",
+      "produitId": "10",
+      "problemeId": "10",
+      "solutionId": "0",
+      "description": "",
+      "statut": 1,
+      "dateCreation": "2023-06-02T10:50:44.773Z",
+      "id": 7,
+      "dateModification": "2023-06-07T08:42:00.482Z"
+    },
+    {
+      "vehiculeId": "21",
+      "user": 1,
+      "villeId": "3",
+      "produitId": "1",
+      "problemeId": "3",
+      "solutionId": "2",
+      "description": "1111111111111",
+      "statut": 1,
+      "dateCreation": "2023-06-06T11:07:04.645Z",
+      "dateModification": "2023-06-06T11:10:16.657Z",
+      "id": 8
+    },
+    {
+      "vehiculeId": "1",
+      "user": "1",
+      "villeId": "1",
+      "produitId": "8",
+      "problemeId": "3",
+      "solutionId": "2",
+      "description": "",
+      "statut": 1,
+      "dateCreation": "2023-06-07T16:12:35.886Z",
+      "dateModification": null,
+      "id": 9
+    },
+    {
+      "vehiculeId": "1",
+      "user": "1",
+      "villeId": "1",
+      "produitId": "1",
+      "problemeId": "1",
+      "solutionId": "1",
+      "description": "",
+      "statut": 2,
+      "dateCreation": "2023-06-08T15:44:28.209Z",
+      "dateModification": "2023-06-09T08:17:35.240Z",
+      "id": 10
+    },
+    {
+      "vehiculeId": "1",
+      "user": "1",
+      "villeId": "1",
+      "produitId": "1",
+      "problemeId": "1",
+      "solutionId": "1",
+      "description": "",
+      "file": "th.jfif",
+      "statut": 1,
+      "dateCreation": "2023-06-12T10:39:19.338Z",
+      "dateModification": null,
+      "id": 11
+    },
+    {
+      "vehiculeId": "1",
+      "user": "1",
+      "villeId": "1",
+      "produitId": "1",
+      "problemeId": "1",
+      "solutionId": "1",
+      "description": "",
+      "file": "téléchargement.jfif",
+      "statut": 1,
+      "dateCreation": "2023-06-12T10:41:47.554Z",
+      "dateModification": null,
+      "id": 12
+    },
+    {
+      "vehiculeId": "11",
+      "user": "1",
+      "villeId": "2",
+      "produitId": "1",
+      "problemeId": "1",
+      "solutionId": "1",
+      "description": "",
+      "file": "th.jfif",
+      "statut": 1,
+      "dateCreation": "2023-06-12T10:44:56.890Z",
+      "dateModification": null,
+      "id": 13
+    },
+    {
+      "vehiculeId": "1",
+      "user": "1",
+      "villeId": "1",
+      "produitId": "1",
+      "problemeId": "1",
+      "solutionId": "1",
+      "description": "",
+      "file": "th.jfif",
+      "statut": 0,
+      "dateCreation": "2023-06-12T10:45:42.810Z",
+      "dateModification": null,
+      "id": 14
+    },
+    {
+      "vehiculeId": "1",
+      "user": "1",
+      "villeId": "1",
+      "produitId": "1",
+      "problemeId": "1",
+      "solutionId": "1",
+      "description": "",
+      "file": "",
+      "statut": 1,
+      "dateCreation": "2023-06-12T10:46:22.125Z",
+      "dateModification": null,
+      "id": 15
+    },
+    {
+      "vehiculeId": "1",
+      "user": "1",
+      "villeId": "1",
+      "produitId": "1",
+      "problemeId": "1",
+      "solutionId": "1",
+      "description": "",
+      "file": "th.jfif",
+      "statut": 1,
+      "dateCreation": "2023-06-12T10:47:05.911Z",
+      "dateModification": null,
+      "id": 16
+    },
+    {
+      "vehiculeId": "1",
+      "user": "1",
+      "villeId": "1",
+      "produitId": "1",
+      "problemeId": "1",
+      "solutionId": "1",
+      "description": "",
+      "file": "",
+      "statut": 2,
+      "dateCreation": "2023-06-12T10:47:45.179Z",
+      "dateModification": null,
+      "id": 17
+    },
+    {
+      "vehiculeId": "3",
+      "user": "1",
+      "villeId": "1",
+      "produitId": "1",
+      "problemeId": "1",
+      "solutionId": 0,
+      "description": "",
+      "file": "",
+      "statut": 0,
+      "dateCreation": "2023-06-12T10:57:36.261Z",
+      "dateModification": null,
+      "id": 18
+    }
+  ],
+  "user": [
+    {
+      "id": 1,
+      "username": "user",
+      "password": "user",
+      "ville": "ville",
+      "is_super": 1,
+      "is_admin": 0
+    },
+    {
+      "id": 2,
+      "username": "admin",
+      "password": "admin",
+      "ville": "ville",
+      "is_super": 1,
+      "is_admin": 1
+    },
+    {
+      "username": "aziz",
+      "password": "aziz",
+      "is_admin": 0,
+      "id": 3
+    }
+  ],
+  "img": [
+    {
+      "id": 1,
+      "name": ""
+    },
+    {
+      "id": 2
+    },
+    {
+      "id": 3
+    }
+  ]
+}

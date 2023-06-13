@@ -1,0 +1,14 @@
+  getForm(){
+    this.dataservice.findAll().subscribe((forms:any)=>this.forms=forms['reclamation'])
+  }
+
+  resetSelect(){
+    
+    
+  }
+
+  add(){
+    this.dataservice.addForm(this.newForm).subscribe(
+      (form:any)=>{this.forms = [form,...this.forms]}
+      )
+  }
