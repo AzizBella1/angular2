@@ -7,16 +7,18 @@ import { EreurComponent } from './components/ereur/ereur.component';
 import { ModifierFormComponent } from './components/modifier-form/modifier-form.component';
 import { LoginComponent } from './components/login/login.component';
 import { AdminHomeComponent } from './components/admin-home/admin-home.component';
-import { AdminGestionComponent } from './components/admin-gestion/admin-gestion.component';
 import { VilleComponent } from './components/ville/ville.component';
 import { VehiculeComponent } from './components/vehicule/vehicule.component';
 import { ProduitComponent } from './components/produit/produit.component';
 import { ProblemeComponent } from './components/probleme/probleme.component';
 import { SolutionComponent } from './components/solution/solution.component';
 import { UserComponent } from './components/user/user.component';
+import { DashComponent } from './dash/dash.component';
+import { ReferenceComponent } from './components/reference/reference.component';
 
 const routes: Routes = [
   { path:'' ,component:LoginComponent},
+  { path:'dashboard' ,component:DashComponent},
   { path:'acceuil' ,component:AdminHomeComponent},
   { path:'gestion/user' ,component:UserComponent},
   { path:'gestion/ville' ,component:VilleComponent},
@@ -24,11 +26,12 @@ const routes: Routes = [
   { path:'gestion/produit' ,component:ProduitComponent},
   { path:'gestion/probleme' ,component:ProblemeComponent},
   { path:'gestion/solution' ,component:SolutionComponent},
+  { path:'gestion/ref' ,component:ReferenceComponent},
   { path:'home' ,component:FormComponent},
   { path:'ereur' ,component:EreurComponent},
   { path:'ville' ,component:VillesComponent},
   { path:'forms' ,component:TestComponent},
-  { path:'mod/:form/:ville' ,component:ModifierFormComponent},
+  { path:'mod/:form' ,component:ModifierFormComponent},
   
 ];
 

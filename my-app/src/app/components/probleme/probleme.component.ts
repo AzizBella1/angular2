@@ -15,28 +15,33 @@ import { Vehicule } from 'src/app/models/vehicule';
 })
 export class ProblemeComponent implements OnInit {
   Probleme: any={
-    title:'',produitId:0
+    name:'',solutions:[]
   }
 
-  editVehicule:Vehicule[]=[]
-  produit: any;
-  villeTrue:boolean=true
-  selectedProduit: any ={
-    id:0,title:''
-  }
+  solution: any;
+  
 
   hideAdd:boolean=true
   addButton:boolean=true
   add(){
     this.addButton=true
     this.Probleme = {
-      title:'',villeId:0
+      name:'',solutions:[]
     }
 
-    this.selectedProduit = {
-      id:0,title:''
-    }
+    this.solutions=[]
     this.hideAdd=!this.hideAdd
+    
+  }
+
+  solutions:any=[]
+
+  test(x:any){
+    
+    
+    console.log("p ",this.Probleme);
+    
+    console.log(x);
     
   }
 
@@ -47,14 +52,14 @@ export class ProblemeComponent implements OnInit {
     this.getProbleme()
   }
 
-  onChange(event:any){
-    this.selectedProduit.id=event.value
-  }
+  
   showAll() {
     
-    this.dataservice.getProduit().subscribe(
+    this.dataservice.getSolution().subscribe(
       (data:any) => {
-        this.produit = data
+        this.solution = data
+        console.log(data);
+        
       }
     )
 
@@ -62,17 +67,19 @@ export class ProblemeComponent implements OnInit {
 
   addProbleme = new FormGroup({
     probleme: new FormControl('',[Validators.required, Validators.pattern("[a-z A-Z 0-9]*")]),
-    produit:new FormControl('',Validators.required)
+    Solution:new FormControl('',Validators.required)
   })
 
   get probleme() {
     return this.addProbleme.controls['probleme'];
   }
+  get Solution() {
+    return this.addProbleme.controls['Solution'];
+  }
 
 
 
-
-  displayedColumns = ['id','title','mod','supp'];
+  displayedColumns = ['id','name','mod','supp'];
   dataSource:any = [];
   //name = this.activateRoute.snapshot.paramMap.get('name')
   idUser = sessionStorage.getItem('user');
@@ -84,6 +91,7 @@ export class ProblemeComponent implements OnInit {
   getProbleme() {
     this.dataservice.getProbleme().subscribe(
       (data:any) => {
+        console.log(data);
         this.dataSource = new MatTableDataSource<Element>(data)
         
         this.dataSource.paginator = this.paginator;
@@ -100,36 +108,46 @@ export class ProblemeComponent implements OnInit {
   
 
   addNew(){
-    this.Probleme.title=this.addProbleme.value.probleme
-    this.Probleme.produitId=this.addProbleme.value.produit
+    this.solutions.forEach((element:any) => {
+      this.Probleme.solutions.push({id:element})
+    });
+    
     
     this.dataservice.addProbleme( this.Probleme).subscribe(
       (data:any) => {
-        
+        this.ngOnInit()
       }
     )
-    this.ngOnInit()
+    
     this.hideAdd=!this.hideAdd
   }
 
   onMod(probleme:any){
     this.addButton=false
     this.hideAdd=false
-    this.Probleme.produitId = probleme.produitId
-    this.Probleme.title = probleme.title
+    this.solutions=[]
+    this.Probleme.name = probleme.name
     this.Probleme.id = probleme.id
+    probleme.solutions.forEach((element:any) => {
+      const result = this.solutions.filter((i:any) => i === element.id).length;
+      if (result==0) {
+        
+        this.solutions.push(element.id)
+      }
+    });
+    //this.Probleme.solutions = probleme.solutions
 
-
-    this.selectedProduit = {
-      id:probleme.produitId
-    }
+    console.log(this.solutions);
+    
+    
   }
 
-  modVehicule(probleme:any){
-   
+  modProbleme(probleme:any){
+    this.solutions.forEach((element:any) => {
+      this.Probleme.solutions.push({id:element})
+    });
     this.dataservice.editProbleme(this.Probleme).subscribe(()=>{
       
-      probleme = this.Probleme
       this.getProbleme()
     })
     this.hideAdd=!this.hideAdd
@@ -138,8 +156,8 @@ export class ProblemeComponent implements OnInit {
 
   onDelete(id:any){
     this.dataservice.deleteProbleme(id).subscribe(
-      ()=>{}
+      ()=>{this.getProbleme()}
     )
-    this.getProbleme()
+    
   }
 }

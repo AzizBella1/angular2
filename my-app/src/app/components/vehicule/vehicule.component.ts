@@ -14,27 +14,41 @@ import { Vehicule } from 'src/app/models/vehicule';
   styleUrls: ['./vehicule.component.css']
 })
 export class VehiculeComponent implements OnInit {
-  Vehicule: any={
-    title:'',villeId:''
+  devaice: any={
+    name:'',ville:{id:0},
+    disabled:0,
+    fonction:'',
+    capteurs:'',
+    typeveh:'',
+    uniqueid:'',
+    vehicule:''    
   }
 
   editVehicule:Vehicule[]=[]
   ville: any;
   villeTrue:boolean=true
   selectedville: any ={
-    id:0,title:''
+    id:0,name:''
   }
 
   hideAdd:boolean=true
   addButton:boolean=true
   add(){
     this.addButton=true
-    this.Vehicule = {
-      title:'',villeId:0
+    this.devaice = {
+      name:'',ville:{id:0},
+      disabled:0,
+      fonction:'',
+      capteurs:'',
+      typeveh:'',
+      uniqueid:'',
+      vehicule:''      
+
     }
+    
 
     this.selectedville = {
-      id:0,title:''
+      id:0,name:''
     }
     this.hideAdd=!this.hideAdd
     
@@ -62,18 +76,44 @@ export class VehiculeComponent implements OnInit {
 
   addVehicule = new FormGroup({
     vehicule: new FormControl('',[Validators.required, Validators.pattern("[a-z A-Z 0-9]*")]),
-    ville:new FormControl('',Validators.required)
+    ville:new FormControl(),
+    uniqueid:new FormControl('',Validators.required),
+    name:new FormControl('',Validators.required),
+    capteurs:new FormControl('',Validators.required),
+    immatriculation:new FormControl('',Validators.required),
+    fonction:new FormControl('',Validators.required),
+    disabled:new FormControl(),
+    typeveh:new FormControl('',Validators.required)
   })
 
+  get uniqueid() {
+    return this.addVehicule.controls['uniqueid'];
+  }
+  get name() {
+    return this.addVehicule.controls['name'];
+  }
+  get capteurs() {
+    return this.addVehicule.controls['capteurs'];
+  }
+  get immatriculation() {
+    return this.addVehicule.controls['immatriculation'];
+  }
   get vehicule() {
     return this.addVehicule.controls['vehicule'];
   }
+  get fonction() {
+    return this.addVehicule.controls['fonction'];
+  }
+  get typeveh() {
+    return this.addVehicule.controls['typeveh'];
+  }
+
 
 
   vehicules:any=[]
 
 
-  displayedColumns = ['id','title','mod','supp'];
+  displayedColumns = ['id','name','vehicule','typeveh','fonction','uniqueid','capteurs','disabled','mod','supp'];
   dataSource:any = [];
   //name = this.activateRoute.snapshot.paramMap.get('name')
   idUser = sessionStorage.getItem('user');
@@ -85,6 +125,8 @@ export class VehiculeComponent implements OnInit {
   getVehicule() {
     this.dataservice.getVehicule().subscribe(
       (data:any) => {
+        console.log(data);
+        
         this.dataSource = new MatTableDataSource<Element>(data)
         
         this.dataSource.paginator = this.paginator;
@@ -99,10 +141,9 @@ export class VehiculeComponent implements OnInit {
   }
 
   addNewVehicule(){
-    this.Vehicule.title=this.addVehicule.value.vehicule
-    this.Vehicule.villeId=this.addVehicule.value.ville
     
-    this.dataservice.addVehicule( this.Vehicule).subscribe(
+    
+    this.dataservice.addVehicule( this.devaice).subscribe(
       (data:any) => {
         
       }
@@ -114,21 +155,28 @@ export class VehiculeComponent implements OnInit {
   onMod(vehicule:any){
     this.addButton=false
     this.hideAdd=false
-    this.Vehicule.villeId = vehicule.villeId
-    this.Vehicule.title = vehicule.title
-    this.Vehicule.id = vehicule.id
-
-
+    this.devaice.ville.id = vehicule.ville.id
+    this.devaice.name = vehicule.name
+    this.devaice.id = vehicule.id
+    this.devaice.fonction = vehicule.fonction
+    this.devaice.capteurs = vehicule.capteurs
+    this.devaice.typeveh = vehicule.typeveh
+    this.devaice.uniqueid = vehicule.uniqueid
+    this.devaice.vehicule = vehicule.vehicule
+    this.devaice.immatriculation = vehicule.immatriculation
+    console.log(this.devaice);
+    
+    
     this.selectedville = {
-      id:vehicule.villeId
+      id:vehicule.ville.id
     }
   }
 
   modVehicule(vehicule:any){
    
-    this.dataservice.editVehicule(this.Vehicule).subscribe(()=>{
+    this.dataservice.editVehicule(this.devaice).subscribe(()=>{
       
-      vehicule = this.Vehicule
+      vehicule = this.devaice
       this.getVehicule()
     })
     this.hideAdd=!this.hideAdd
@@ -137,8 +185,8 @@ export class VehiculeComponent implements OnInit {
 
   onDelete(id:any){
     this.dataservice.deleteVehicule(id).subscribe(
-      ()=>{}
+      ()=>{ this.getVehicule()}
     )
-    this.getVehicule()
+   
   }
 }

@@ -30,6 +30,19 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator'
 import { MatInputModule } from '@angular/material/input';
 
+import { NgChartsModule } from 'ng2-charts';
+import {MatIconModule} from '@angular/material/icon';
+import { DashComponent } from './dash/dash.component';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatCardModule } from '@angular/material/card';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button'
+import { MatSelectModule } from '@angular/material/select';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import { MatCheckbox, MatCheckboxModule } from '@angular/material/checkbox';
+import { ReferenceComponent } from './components/reference/reference.component';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,7 +61,9 @@ import { MatInputModule } from '@angular/material/input';
     VehiculeComponent,
     ProblemeComponent,
     SolutionComponent,
-    UserComponent
+    UserComponent,
+    DashComponent,
+    ReferenceComponent
   ],
   imports: [
     BrowserModule,
@@ -60,8 +75,17 @@ import { MatInputModule } from '@angular/material/input';
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
-    MatInputModule
-    
+    MatInputModule,
+    NgChartsModule,
+    MatIconModule,
+    MatGridListModule,
+    MatCardModule,
+    MatMenuModule,
+    MatButtonModule,
+    MatSelectModule,
+    MatTableModule,
+    NgxMatSelectSearchModule,
+    MatCheckboxModule    
   ],
   providers: [],
   bootstrap: [AppComponent]

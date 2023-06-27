@@ -16,26 +16,22 @@ import { Vehicule } from 'src/app/models/vehicule';
 })
 export class SolutionComponent implements OnInit {
   Solution: any={
-    title:'',problemeId:0
+    name:''
   }
 
   probleme: any;
   villeTrue:boolean=true
-  selectedProbleme: any ={
-    id:0,title:''
-  }
+  
 
   hideAdd:boolean=true
   addButton:boolean=true
   add(){
     this.addButton=true
     this.Solution = {
-      title:'',villeId:0
+      name:''
     }
 
-    this.selectedProbleme = {
-      id:0,title:''
-    }
+   
     this.hideAdd=!this.hideAdd
     
   }
@@ -47,9 +43,7 @@ export class SolutionComponent implements OnInit {
     this.getSolution()
   }
 
-  onChange(event:any){
-    this.selectedProbleme.id=event.value
-  }
+ 
   showAll() {
     
     this.dataservice.getProbleme().subscribe(
@@ -72,7 +66,7 @@ export class SolutionComponent implements OnInit {
 
 
 
-  displayedColumns = ['id','title','mod','supp'];
+  displayedColumns = ['id','name','mod','supp'];
   dataSource:any = [];
   //name = this.activateRoute.snapshot.paramMap.get('name')
   idUser = sessionStorage.getItem('user');
@@ -98,29 +92,24 @@ export class SolutionComponent implements OnInit {
   }
 
   addNew(){
-    this.Solution.title=this.addSolution.value.solution
-    this.Solution.problemeId=this.addSolution.value.probleme
+    this.Solution.name=this.addSolution.value.solution
     
     this.dataservice.addSolution( this.Solution).subscribe(
       (data:any) => {
+        this.ngOnInit()
         
       }
     )
-    this.ngOnInit()
     this.hideAdd=!this.hideAdd
   }
 
   onMod(solution:any){
     this.addButton=false
     this.hideAdd=false
-    this.Solution.problemeId = solution.problemeId
-    this.Solution.title = solution.title
+    this.Solution.name = solution.name
     this.Solution.id = solution.id
 
 
-    this.selectedProbleme = {
-      id:solution.problemeId
-    }
   }
 
   modSolution(solution:any){
@@ -136,8 +125,8 @@ export class SolutionComponent implements OnInit {
 
   onDelete(id:any){
     this.dataservice.deleteSolution(id).subscribe(
-      ()=>{}
+      ()=>{ this.getSolution()}
     )
-    this.getSolution()
+   
   }
 }

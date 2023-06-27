@@ -1,5 +1,5 @@
 export interface Solution {
     id?:number,
-    title:string,
+    name:string,
     problemeId:number
 }

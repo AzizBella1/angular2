@@ -6,25 +6,25 @@ import { MatPaginator} from '@angular/material/paginator';
 import { MatInputModule} from '@angular/material/input';
 import { MatSort } from '@angular/material/sort';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Vehicule } from 'src/app/models/vehicule';
 
 @Component({
-  selector: 'app-ville',
-  templateUrl: './ville.component.html',
-  styleUrls: ['./ville.component.css']
+  selector: 'app-reference',
+  templateUrl: './reference.component.html',
+  styleUrls: ['./reference.component.css']
 })
-export class VilleComponent implements OnInit {
-  villeSelected: any={
+export class ReferenceComponent implements OnInit {
+
+  referenceSelected: any={
     name:''
   }
-
   
-
+  reference: any;
+  references: any=[]
   hideAdd:boolean=true
   addButton:boolean=true
   add(){
     this.addButton=true
-    this.villeSelected = {
+    this.referenceSelected = {
       name:''
     }
 
@@ -39,9 +39,10 @@ export class VilleComponent implements OnInit {
     this.showAll()
   }
 
+
+  
   showAll() {
-    
-    this.dataservice.getVille().subscribe(
+    this.dataservice.getReference().subscribe(
       (data:any) => {
         this.dataSource = new MatTableDataSource<Element>(data)
         
@@ -52,22 +53,21 @@ export class VilleComponent implements OnInit {
 
   }
 
+  
 
   filter(event:any){
     this.dataSource.filter = event.value
   }
 
-  
-  addVille = new FormGroup({
-    ville: new FormControl('',[Validators.required, Validators.pattern("[a-z A-Z 0-9]*")])
+  addRef = new FormGroup({
+    ref: new FormControl('',[Validators.required, Validators.pattern("[a-z A-Z 0-9]*")])
   })
 
-  get ville() {
-    return this.addVille.controls['ville'];
+  get ref() {
+    return this.addRef.controls['ref'];
   }
 
-
-  vehicules:any=[]
+  
 
 
   displayedColumns = ['id','name','mod','supp'];
@@ -80,32 +80,32 @@ export class VilleComponent implements OnInit {
 
 
   addNew(){
-    this.villeSelected.name=this.addVille.value.ville
     
-    this.dataservice.addVille( this.villeSelected).subscribe(
+    
+    this.dataservice.addReference( this.referenceSelected).subscribe(
       (data:any) => {
-        
+        this.ngOnInit()
       }
     )
-    this.ngOnInit()
+    
     this.hideAdd=!this.hideAdd
   }
 
-  onMod(ville:any){
+  onMod(produit:any){
     this.addButton=false
     this.hideAdd=false
-    this.villeSelected.name = ville.name
-    this.villeSelected.id = ville.id
-
-
+    this.referenceSelected.name = produit.name
+    this.referenceSelected.id = produit.id
+    
+    
+    
+   
     
   }
-  
-  modVille(ville:any){
+
+  modRef(produit:any){
    
-    this.dataservice.addVille(this.villeSelected).subscribe(()=>{
-      
-      ville = this.villeSelected
+    this.dataservice.editReference(this.referenceSelected).subscribe(()=>{
       this.showAll()
     })
     this.hideAdd=!this.hideAdd
@@ -113,12 +113,9 @@ export class VilleComponent implements OnInit {
   }
 
   onDelete(id:any){
-    this.dataservice.deleteVille(id).subscribe(
-      ()=>{
-        this.showAll()
-
-      }
+    this.dataservice.deleteReference(id).subscribe(
+      ()=>{this.showAll()}
     )
+    
   }
-  
 }

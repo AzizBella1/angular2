@@ -1,5 +1,5 @@
 export interface Vehicule {
     id?:number,
-    title:string,
+    name:string,
     villeId:number
 }

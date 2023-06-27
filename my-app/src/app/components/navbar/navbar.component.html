@@ -1,41 +1,23 @@
+<nav style="padding-left: 5px;" class="navbar navbar-expand-sm navbar-dark bg-dark">
 
-<style>
-    .dropdown {
-      position: relative;
-      display: inline-block;
-    }
-    
-    .dropdown-content {
-      display: none;
-      position: absolute;
-      min-width: 160px;
-      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-      padding: 12px 16px;
-      z-index: 1;
-    }
-    
-    .dropdown:hover .dropdown-content {
-      display: block;
-    }
-    </style>
-<nav  class="navbar navbar-expand-sm navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">myApp</a>
+        
+    <a class="navbar-brand" >myApp</a>
     <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
         aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="collapsibleNavId">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-            <li *ngIf="is_admin==0" routerLinkActive="active" routerLink="/home" class="nav-item active">
+            <li *ngIf="is_admin!='ADMIN'" routerLinkActive="active" routerLink="/home" class="nav-item active">
                 <a  class="nav-link" href="/home"><b>Home</b></a>
             </li>
-            <li *ngIf="is_admin==1" routerLinkActive="active" routerLink="/acceuil" class="nav-item active">
+            <li *ngIf="is_admin=='ADMIN'" routerLinkActive="active" routerLink="/acceuil" class="nav-item active">
                 <a  class="nav-link" href="/acceuil"><b>Home</b></a>
             </li>
-            <li *ngIf="is_admin==0" routerLinkActive="active" class="nav-item active">
+            <li *ngIf="is_admin!='ADMIN'" routerLinkActive="active" class="nav-item active">
                 <a  class="nav-link" routerLink="/forms" href="/forms"><b>List</b></a>
             </li>
-            <li *ngIf="is_admin==1" routerLinkActive="active" class="disabled">
+            <li *ngIf="is_admin=='ADMIN'" routerLinkActive="active" class="disabled">
                 <div class="dropdown">
                     <a class="nav-link bg-dark"><b>Gestion</b></a>
                     <div class="dropdown-content bg-dark">
@@ -45,13 +27,19 @@
                         <a  class="nav-link" routerLink="/gestion/produit" href="/gestion/produit"><b>Produit</b></a>
                         <a  class="nav-link" routerLink="/gestion/probleme" href="/gestion/probleme"><b>Probleme</b></a>
                         <a  class="nav-link" routerLink="/gestion/solution" href="/gestion/solution"><b>Solution</b></a>
+                        <a  class="nav-link" routerLink="/gestion/ref" href="/gestion/ref"><b>Référence</b></a>
                     </div>
                 </div>
+            </li>
+            <li *ngIf="is_admin=='ADMIN'" routerLinkActive="active" class="nav-item active">
+                <a  class="nav-link" routerLink="/dashboard" href="/dashboard"><b>Dashboard</b></a>
+            </li>
+            <li class="logout" >
+                <button (click)="Logout()" style="position: absolute;right: 0;" class="btn btn-outline-warning">Logout</button>
             </li>
             
             
         </ul>
-        <button (click)="Logout()" style="position: absolute;right: 0;" class="btn btn-outline-warning">Logout</button>
        
     </div>
 </nav>

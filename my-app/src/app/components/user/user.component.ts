@@ -16,7 +16,10 @@ import { every } from 'rxjs';
 })
 export class UserComponent implements OnInit{
   userSelected: any={
-    username:'',password:'',is_admin:0
+    username:'',password:'',appRoles: [{ id: 2}],name:'',
+    adress:'',
+    phone:'',
+    email:''
   }
   
 
@@ -25,7 +28,10 @@ export class UserComponent implements OnInit{
   add(){
     this.addButton=true
     this.userSelected = {
-      username:'',password:'',is_admin:0
+      username:'',password:'',appRoles: [{ id: 2}],name:'',
+      adress:'',
+      phone:'',
+      email:''
     }
 
    
@@ -34,23 +40,27 @@ export class UserComponent implements OnInit{
   }
 
   constructor(private dataservice:DataService, private activateRoute: ActivatedRoute){}
- 
+  users:any=[]
   ngOnInit(): void {
     this.showAll()
+    
+    
+
   }
 
 
   
   showAll() {
-    this.dataservice.getUser().subscribe(
-      (data:any) => {
-        
-        this.dataSource = new MatTableDataSource<Element>(data)
+    this.dataservice.getUser().subscribe((res:any)=>{
+      this.users=res
+      this.dataSource = new MatTableDataSource<Element>(this.users)
         
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort
-      }
-    )
+      //console.log(this.users[6]);
+      //console.log('------',this.userSelected);
+    })
+    
 
   }
 
@@ -61,6 +71,10 @@ export class UserComponent implements OnInit{
   addUser = new FormGroup({
     username: new FormControl('',[Validators.required]),
     password: new FormControl('',[Validators.required]),
+    name: new FormControl('',[Validators.required]),
+    adress: new FormControl('',[Validators.required]),
+    phone: new FormControl('',[Validators.required,Validators.pattern('[0-9]*'),Validators.maxLength(10),Validators.minLength(10)]),
+    email: new FormControl('',[Validators.required,Validators.email]),
     admin: new FormControl()
   })
 
@@ -72,15 +86,27 @@ export class UserComponent implements OnInit{
     return this.addUser.controls['password'];
   }
 
-  get admin() {
-    return this.addUser.controls['admin'];
+  get name() {
+    return this.addUser.controls['name'];
+  }
+
+  get adress() {
+    return this.addUser.controls['adress'];
+  }
+
+  get phone() {
+    return this.addUser.controls['phone'];
+  }
+
+  get email() {
+    return this.addUser.controls['email'];
   }
 
 
-  vehicules:any=[]
+ 
 
 
-  displayedColumns = ['id','username','password','is_admin','mod','supp'];
+  displayedColumns = ['id','role','name','username','email','phone','mod','supp'];
   dataSource:any = [];
   //name = this.activateRoute.snapshot.paramMap.get('name')
   idUser = sessionStorage.getItem('user');
@@ -88,44 +114,58 @@ export class UserComponent implements OnInit{
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-
   addNew(){
+    
     this.dataservice.addUser( this.userSelected).subscribe(
       (data:any) => {
+        this.ngOnInit()
         
       }
     )
-    this.ngOnInit()
     this.hideAdd=!this.hideAdd
+    console.log('done****');
+    
   }
+
+
 
   onMod(user:any){
     this.addButton=false
     this.hideAdd=false
-    this.userSelected.is_admin = user.is_admin
-    this.userSelected.username = user.username
-    this.userSelected.password = user.password
-    this.userSelected.id = user.id
+    
+    this.userSelected = {
+      id:user.id,
+      username:user.username,
+      password:user.password,
+      appRoles: [{ id: user.appRoles[0].id}],
+      name:user.name,
+      adress:user.adress,
+      phone:user.phone,
+      email:user.email
+    }
 
 
   }
 
-  modUser(user:any){
+  modUser(){
    
-    this.dataservice.editUser(this.userSelected).subscribe(()=>{
-      
-      user = this.userSelected
-      this.showAll()
-    })
+    this.dataservice.addUser( this.userSelected).subscribe(
+      (data:any) => {
+        this.ngOnInit()
+      }
+    )
+    
     this.hideAdd=!this.hideAdd
+    
+    console.log('done****');
     
   }
 
   onDelete(id:any){
     this.dataservice.deleteUser(id).subscribe(
-      ()=>{}
+      ()=>{this.showAll()}
     )
-    this.showAll()
+    
   }
 
   

@@ -1,93 +1,74 @@
-<app-navbar *ngIf="idUser!=null && is_admin==1"></app-navbar>
+<app-navbar *ngIf="idUser!=null && is_admin=='ADMIN'"></app-navbar>
 
-<div *ngIf="idUser!=null && is_admin==1" class="container mt-5">
+<div *ngIf="idUser!=null && is_admin=='ADMIN'" class="container">
 
-    <div class="col-md-12  table-responsive">
-        <div class="form-group m-4 row">
-            <label class="col-sm-1  col-form-label" for="ville">Ville</label>
-            <div class="col-sm">
-                <select [(ngModel)]="selectedville"  (change)="afficherTest()" class="form-control" name="ville" id="">
-                    <option value="-1">-</option>
-                    <option value="0">All</option>
-                    <option *ngFor="let item of ville" [value]="item.id">{{item.title}}</option>
-                </select>
-                
-            </div>
-           
-            <div class="col-sm-1">
-                ASEC <input type="radio" [(ngModel)]="asec" checked name="date" value="asec" id="">
-            </div>
-            <div class="col-sm">
-                DESC <input type="radio" [(ngModel)]="desc" name="date" value="desc" id="">
-            </div>
-        </div>
+    
 
-        <div *ngIf="!selected" class="alert alert-primary text-center">
-            <strong>Choisir une Ville</strong>
-        </div>
-        <div *ngIf="selected && ne==0" class="alert alert-warning text-center">
-            <strong>Aucune Réclamation</strong>
-        </div>
-        <table *ngIf="selected && forms!=''" class="table table-bordered border-light">
-            <thead>
-                <tr>
-                    <th>Num Reclamation</th>
-                    <th>User</th>
-                    <th>Ville</th>
-                    <th>Véhicule</th>
-                    <th>Produit</th>
-                    <th>Probleme</th>
-                    <th>Solution</th>
-                    <th>Description</th>
-                    <th>Statut</th>
-                    <th>Date Reclamation</th>
-                    <th>Date Modification</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of forms">
-                    <td *ngIf="item.statut==0" class="table-warning"   >{{item.id}}</td>
-                    <td *ngIf="item.statut==0" class="table-warning"  >{{item.username}}</td>
-                    <td *ngIf="item.statut==0" class="table-warning"  >{{item.ville}}</td>
-                    <td *ngIf="item.statut==0" class="table-warning"  >{{item.vehicule}}</td>
-                    <td *ngIf="item.statut==0" class="table-warning"  >{{item.produit}}</td>
-                    <td *ngIf="item.statut==0" class="table-warning"  >{{item.probleme}}</td>
-                    <td *ngIf="item.statut==0" class="table-warning"  >{{item.solution}}</td>
-                    <td *ngIf="item.statut==0" class="table-warning"  >{{item.description}}</td>
-                    <td *ngIf="item.statut==0" class="table-warning"  >En cours</td>
-                    <td *ngIf="item.statut==0" class="table-warning"  >{{item.dateCreation | date:'yyyy-MM-dd'}}</td>
-                    <td *ngIf="item.statut==0" class="table-warning"  >{{item.dateModification | date:'yyyy-MM-dd'}}</td>
-                    <td *ngIf="item.statut==0" class="table-warning"   [ngSwitch]="item.statut"></td>
-                    <td *ngIf="item.statut==1" >{{item.id}}</td>
-                    <td *ngIf="item.statut==1">{{item.username}}</td>
-                    <td *ngIf="item.statut==1">{{item.ville}}</td>
-                    <td *ngIf="item.statut==1">{{item.vehicule}}</td>
-                    <td *ngIf="item.statut==1">{{item.produit}}</td>
-                    <td *ngIf="item.statut==1">{{item.probleme}}</td>
-                    <td *ngIf="item.statut==1">{{item.solution}}</td>
-                    <td *ngIf="item.statut==1">{{item.description}}</td>
-                    <td *ngIf="item.statut==1">Traité</td>
-                    <td *ngIf="item.statut==1">{{item.dateCreation | date:'yyyy-MM-dd'}}</td>
-                    <td *ngIf="item.statut==1">{{item.dateModification | date:'yyyy-MM-dd'}}</td>
-                    <td *ngIf="item.statut==1" [ngSwitch]="item.statut"><button (click)="valider($event)" class="btn btn-success"  value="{{item.id}}">Valider</button></td>
-                    <td class="table-success" *ngIf="item.statut==2" >{{item.id}}</td>
-                    <td class="table-success" *ngIf="item.statut==2">{{item.username}}</td>
-                    <td class="table-success" *ngIf="item.statut==2">{{item.ville}}</td>
-                    <td class="table-success" *ngIf="item.statut==2">{{item.vehicule}}</td>
-                    <td class="table-success" *ngIf="item.statut==2">{{item.produit}}</td>
-                    <td class="table-success" *ngIf="item.statut==2">{{item.probleme}}</td>
-                    <td class="table-success" *ngIf="item.statut==2">{{item.solution}}</td>
-                    <td class="table-success" *ngIf="item.statut==2">{{item.description}}</td>
-                    <td class="table-success" *ngIf="item.statut==2">Valider</td>
-                    <td class="table-success" *ngIf="item.statut==2">{{item.dateCreation | date:'yyyy-MM-dd'}}</td>
-                    <td class="table-success" *ngIf="item.statut==2">{{item.dateModification | date:'yyyy-MM-dd'}}</td>
-                    <td class="table-success" *ngIf="item.statut==2" [ngSwitch]="item.statut"><button (click)="invalider($event)" class="btn btn-outline-danger"  value="{{item.id}}">Invalider</button></td>
-                    
-                </tr>
+    <div class="container">
+        <h1>Liste Problemes</h1>
+            <input class="form-control" (keyup)="filter($event.target)" placeholder="Filter">
         
-            </tbody>
-        </table>
     </div>
+    
+    <div class="container col-md-12  table-responsive">
+        
+        <br>
+        <mat-table class="tt" #table matSort [dataSource]="dataSource">
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> No </mat-header-cell>
+            <mat-cell *matCellDef="let element" [ngClass]="{'encours': element.statut == 0 ,'traite': element.statut == 1}"> {{element.id}} </mat-cell>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="user">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> User </mat-header-cell>
+            <mat-cell *matCellDef="let element" [ngClass]="{'encours': element.statut == 0 ,'traite': element.statut == 1}" > {{element.user}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="villeId">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Ville </mat-header-cell>
+            <mat-cell *matCellDef="let element" [ngClass]="{'encours': element.statut == 0 ,'traite': element.statut == 1}"> {{element.villeId}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="vehiculeId">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Vehicule </mat-header-cell>
+            <mat-cell *matCellDef="let element" [ngClass]="{'encours': element.statut == 0 ,'traite': element.statut == 1}"> {{element.vehiculeId}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="st">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Statut </mat-header-cell>
+            <mat-cell *matCellDef="let element" [ngClass]="{'encours': element.statut == 0 ,'traite': element.statut == 1}"> {{element.st}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="dateCreation">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> dateCreation </mat-header-cell>
+            <mat-cell *matCellDef="let element" [ngClass]="{'encours': element.statut == 0 ,'traite': element.statut == 1}"> {{element.dateCreation | date:'yyyy-MM-dd'}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="dateModification">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> dateModification </mat-header-cell>
+            <mat-cell *matCellDef="let element" [ngClass]="{'encours': element.statut == 0 ,'traite': element.statut == 1}"> {{element.dateModification | date:'yyyy-MM-dd'}} </mat-cell>
+        </ng-container>
+        <!--<ng-container matColumnDef="valider">
+            <mat-header-cell *matHeaderCellDef> Valider </mat-header-cell>
+            <mat-cell *matCellDef="let element"> <button *ngIf="element.statut==1" (click)="valider(element.id)" class="btn btn-success" >Valider</button> <button (click)="invalider(element.id)" *ngIf="element.statut==2" class="btn btn-outline-danger" >Invalider</button></mat-cell>
+        </ng-container>-->
+       
+
+        
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <mat-paginator #paginator
+    [pageSize]="15"
+    [showFirstLastButtons]="true">
+    </mat-paginator>
+
+    
+    
+    
+    
+</div>
+
+   
 
     
 </div>

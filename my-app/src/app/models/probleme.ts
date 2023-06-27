@@ -1,5 +1,5 @@
 export interface Probleme {
     id?:number,
-    title:string,
+    name:string,
     produitId:number
 }

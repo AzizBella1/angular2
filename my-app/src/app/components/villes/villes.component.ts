@@ -11,11 +11,11 @@ export class VillesComponent {
   constructor(private villeService:DataService){}
   ville:any
   testVille:Ville={
-    title:''
+    name:''
   }
   editVille:Ville={
     id:5,
-    title:'paris'
+    name:'paris'
   }
   villes: Ville[] = []
 
@@ -36,7 +36,7 @@ export class VillesComponent {
 
 
   tet(){
-    if (this.testVille.title=="nice") {
+    if (this.testVille.name=="nice") {
       this.villeService.addVille(this.testVille).subscribe((ville:any)=> {
         this.villes = [ville , ...this.villes],
         console.log(this.testVille)
@@ -54,7 +54,7 @@ export class VillesComponent {
   
   vehicule: any;
   selectedville: any ={
-    id:0,title:''
+    id:0,name:''
   }
 
  

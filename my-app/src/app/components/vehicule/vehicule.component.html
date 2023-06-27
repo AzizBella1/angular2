@@ -1,6 +1,6 @@
-<app-navbar *ngIf="idUser!=null && is_admin==1"></app-navbar>
+<app-navbar *ngIf="idUser!=null && is_admin=='ADMIN'"></app-navbar>
 
-<div *ngIf="idUser!=null && is_admin==1" >
+<div *ngIf="idUser!=null && is_admin=='ADMIN'" >
 
     <div *ngIf="hideAdd" class="container py-4"> 
        
@@ -8,13 +8,14 @@
     </div>
 <div *ngIf="!hideAdd" class="container mt-5">
     <form [formGroup]="addVehicule">
+        {{selectedville | json}}
         <div class="col-md-4 ml-md-auto">
             <div class="form-group py-2">
                 <label class="col-sm-2  col-form-label" for="ville">Ville</label>
                 <div class="col-sm-8">
-                    <select [(ngModel)]="selectedville.id" formControlName="ville" required (change)="onChange($event.target)" class="form-control" name="ville" id="">
+                    <select [(ngModel)]="devaice.ville.id" formControlName="ville" required (change)="onChange($event.target)" class="form-control" name="ville" id="">
                         <option value="0">-</option>
-                        <option *ngFor="let item of ville" [value]="item.id">{{item.title}}</option>
+                        <option *ngFor="let item of ville" [value]="item.id">{{item.name}}</option>
                     </select>
                     <small *ngIf="selectedville.id==0" id="fileHelpId" style="color: red;" class="form-text"> * champ obligatoire choisir une ville </small>
                 </div>
@@ -22,16 +23,73 @@
                 
             </div>
             <div class="form-group py-2">
+                <label for="vehicule">Nom</label>
+                <input [(ngModel)]="devaice.name" formControlName="name" type="text" name="name" class="form-control" >
+                <small *ngIf="name.invalid" id="fileHelpId" style="color: red;" class="form-text"> ** </small>
+                
+            </div>
+            <div class="form-group py-2">
                 <label for="vehicule">Vehicule</label>
-                <input [(ngModel)]="Vehicule.title" formControlName="vehicule" type="text" name="vehicule" class="form-control" >
+                <input [(ngModel)]="devaice.vehicule" formControlName="vehicule" type="text" name="vehicule" class="form-control" >
                 <small *ngIf="vehicule.invalid" id="fileHelpId" style="color: red;" class="form-text"> ** </small>
                 
             </div>
+            <div class="form-group py-2">
+                <label for="uniqueid">Uniqueid</label>
+                <input [(ngModel)]="devaice.uniqueid" formControlName="uniqueid" type="text" name="uniqueid" class="form-control" >
+                <small *ngIf="uniqueid.invalid" id="fileHelpId" style="color: red;" class="form-text"> ** </small>
+                
+            </div>
+            <div class="form-group py-2">
+                <label for="vehicule">Immatriculation</label>
+                <input [(ngModel)]="devaice.immatriculation" formControlName="immatriculation" type="text" name="immatriculation" class="form-control" >
+                <small *ngIf="immatriculation.invalid" id="fileHelpId" style="color: red;" class="form-text"> ** </small>
+                
+            </div>
+            <div class="form-group py-2">
+                <label for="vehicule">Type Véhicule</label>
+                <input [(ngModel)]="devaice.typeveh" formControlName="typeveh" type="text" name="typeveh" class="form-control" >
+                <small *ngIf="typeveh.invalid" id="fileHelpId" style="color: red;" class="form-text"> ** </small>
+                
+            </div>
+            <div class="form-group py-2">
+                <label for="vehicule">Capteurs</label>
+                <input [(ngModel)]="devaice.capteurs" formControlName="capteurs" type="text" name="capteurs" class="form-control" >
+                <small *ngIf="capteurs.invalid" id="fileHelpId" style="color: red;" class="form-text"> ** </small>
+                
+            </div>
+            <div class="form-group py-2">
+                <label for="vehicule">Fonction</label>
+                <input [(ngModel)]="devaice.fonction" formControlName="fonction" type="text" name="fonction" class="form-control" >
+                <small *ngIf="fonction.invalid" id="fileHelpId" style="color: red;" class="form-text"> ** </small>
+                
+            </div>
+            <div class="form-group md-5 py-2">
+                
+                <div class="row">
+                    <div class="col">
+                        <label for="disabled">Disabled</label>
+                    </div>
+                    <div class="col"  [ngSwitch]="devaice.disabled">
+                        <input *ngSwitchCase="1" checked [(ngModel)]="devaice.disabled"  formControlName="disabled" type="radio" name="disabled" [value]="1">
+                        <input *ngSwitchCase="0" [(ngModel)]="devaice.disabled"  formControlName="disabled" type="radio" name="disabled" [value]="1">Oui
+                    </div>
+                    <div class="col"  [ngSwitch]="devaice.disabled">
+                        <input *ngSwitchCase="1" [(ngModel)]="devaice.disabled"  formControlName="disabled" type="radio" name="disabled" [value]="0">
+                        <input *ngSwitchCase="0" [(ngModel)]="devaice.disabled" checked formControlName="disabled" type="radio" name="disabled" [value]="0">Non
+                    </div>
+                    <div class="col">
+                    </div>
+                    <div class="col">
+                    </div>
+                </div>
+            </div>
+            
             <div class="form-group">
                 <div class="row">
                     <div class="col">
-                        <button *ngIf="addButton" class="btn btn-success btn-block" (click)="addNewVehicule()" [disabled]="vehicule.invalid || selectedville.id==0" type="submit">Ajouter</button>
-                        <button *ngIf="!addButton" class="btn btn-warning btn-block" (click)="modVehicule(Vehicule)" [disabled]="vehicule.invalid || selectedville.id==0" type="submit">Modifier</button>
+                        <button *ngIf="addButton" class="btn btn-success btn-block" (click)="addNewVehicule()" [disabled]="addVehicule.invalid || selectedville.id==0" type="submit">Ajouter</button>
+                        <button *ngIf="!addButton" class="btn btn-warning btn-block" (click)="modVehicule(devaice)" [disabled]="addVehicule.invalid || selectedville.id==0" type="submit">Modifier</button>
                     </div>
                     <div class="col">
                         <button class="btn btn-secondary btn-block" (click)="add()" type="submit">Annuler</button>
@@ -44,14 +102,16 @@
     </form>
     <hr>
 </div>
-
-
-
-<div class="container body">
+<div class="container">
     <h1>Liste Vehicules</h1>
-    <input class="form-control" (keyup)="filter($event.target)" placeholder="Filter">
+        <input class="form-control" (keyup)="filter($event.target)" placeholder="Filter">
+    
+</div>
+
+<div class="container col-md-12  table-responsive">
+    
     <br>
-    <mat-table #table matSort [dataSource]="dataSource">
+    <mat-table class="tt" #table matSort [dataSource]="dataSource">
 
         <!-- Position Column -->
         <ng-container matColumnDef="id">
@@ -60,9 +120,33 @@
         </ng-container>
 
         <!-- Name Column -->
-        <ng-container matColumnDef="title">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.title}} </mat-cell>
+        <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Nom </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="vehicule">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Véhicule </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.vehicule}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="typeveh">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Type Véhicule </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.typeveh}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="fonction">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Fonction </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.fonction}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="uniqueid">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Uniqueid </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.uniqueid}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="capteurs">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Capteurs </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.capteurs}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="disabled">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Disabled </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.disabled}}</mat-cell>
         </ng-container>
         <ng-container matColumnDef="mod">
             <mat-header-cell *matHeaderCellDef> Modifier </mat-header-cell>
@@ -70,7 +154,7 @@
         </ng-container>
         <ng-container matColumnDef="supp">
             <mat-header-cell *matHeaderCellDef > Supprimer </mat-header-cell>
-            <mat-cell *matCellDef="let element"> <button (click)="onDelete(element.id)" class="btn btn-danger" >supp</button> </mat-cell>
+            <mat-cell *matCellDef="let element"> <button (click)="onDelete(element.id)" class="btn btn-sm btn-danger" ><mat-icon>delete_forever</mat-icon></button> </mat-cell>
         </ng-container>
 
         

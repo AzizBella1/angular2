@@ -1,5 +1,7 @@
 import { HttpClient, HttpEventType, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { NgxImageCompressService } from 'ngx-image-compress';
 import { Observable } from 'rxjs';
 import { DataService } from 'src/app/sevices/data.service';
 
@@ -9,15 +11,30 @@ import { DataService } from 'src/app/sevices/data.service';
   styleUrls: ['./ereur.component.css']
 })
 export class EreurComponent implements OnInit{
+  test: any;
+  ville: any;
+ 
 
-  constructor(private uploadService: DataService,private http:HttpClient) {}
+  constructor(private uploadService: DataService,private http:HttpClient,private imageCompress: NgxImageCompressService) {}
   selectedFile:any
+
+  reclamation:any=[]
   ngOnInit(): void {
-    
+    this.rec()
+    this.showAll()
+    this.getReclamation()
   }
  
   name:any = '';
  
+  rec(){
+    this.uploadService.getReclamation().subscribe((res:any)=>{
+      this.reclamation=res
+      console.log(this.reclamation);
+    })
+    
+  }
+
 
   getName(name:any){
     this.name=name
@@ -112,6 +129,59 @@ export class EreurComponent implements OnInit{
       this.http.post("./assets", this.file);
 
       
+    }
+
+    
+
+    newForm: any
+
+    selected:any 
+    getReclamation(){
+      this.uploadService.getIdReclamation(34).subscribe(
+        (res:any)=>{
+          this.newForm=res.villeId
+          this.selected= new FormControl(res.villeId);
+          console.log("reclamation ",this.newForm)
+          
+          
+        }
+        )
+    }
+    compareFn(t1: any, t2: any): boolean { 
+      return t1 && t2 ? t1.key === t2.key : t1 === t2;
+    }
+    
+    showAll() {
+    
+      this.uploadService.getVille().subscribe(
+        (data:any) => {
+          this.ville = data,
+          console.log(this.ville)
+        }
+      )
+      
+  
+    }
+
+
+
+    /////        Compress
+
+    imgResultBeforeCompression: string = '';
+    imgResultAfterCompression: string = '';
+
+    compressFile() {
+        this.imageCompress.uploadFile().then(({image, orientation}) => {
+            this.imgResultBeforeCompression = image;
+            console.log('Size in bytes of the uploaded image was:', this.imageCompress.byteCount(image));
+
+            this.imageCompress
+                .compressFile(image, orientation, 50, 50) // 50% ratio, 50% quality
+                .then(compressedImage => {
+                    this.imgResultAfterCompression = compressedImage;
+                    console.log('Size in bytes after compression is now:', this.imageCompress.byteCount(compressedImage));
+                });
+        });
     }
 
 

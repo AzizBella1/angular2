@@ -8,24 +8,20 @@
     </div>
    
 <div *ngIf="!hideAdd" class="container mt-5">
-    <form [formGroup]="addProduit">
+    <form [formGroup]="addRef">
         <div class="col-md-6 ml-md-auto">
-            <mat-form-field>
-                <mat-select placeholder="Probleme"  [(ngModel)]="problemes" formControlName="Probleme" multiple>
-                  <mat-option *ngFor="let item of probleme" [value]="item.id" >{{item.name}}</mat-option>
-                </mat-select>
-              </mat-form-field>
+            
             <div class="form-group md-5 py-2">
-                <label for="produit">Produit</label>
-                <input [(ngModel)]="produitSelected.name" formControlName="produit" type="text" name="produit" class="form-control" >
-                <small *ngIf="produit.invalid" id="fileHelpId" style="color: red;" class="form-text"> ** </small>
+                <label for="ref">Référence</label>
+                <input [(ngModel)]="referenceSelected.name" formControlName="ref" type="text" name="ref" class="form-control" >
+                <small *ngIf="ref.invalid" id="fileHelpId" style="color: red;" class="form-text"> ** </small>
                 
             </div>
             <div class="form-group">
                 <div class="row">
                     <div class="col">
-                        <button *ngIf="addButton" class="btn btn-success btn-block" (click)="addNew()" [disabled]="addProduit.invalid" type="submit">Ajouter</button>
-                        <button *ngIf="!addButton" class="btn btn-warning btn-block" (click)="modProduit(produitSelected)" [disabled]="addProduit.invalid" type="submit">Modifier</button>
+                        <button *ngIf="addButton" class="btn btn-success btn-block" (click)="addNew()" [disabled]="addRef.invalid" type="submit">Ajouter</button>
+                        <button *ngIf="!addButton" class="btn btn-warning btn-block" (click)="modRef(referenceSelected)" [disabled]="addRef.invalid" type="submit">Modifier</button>
                     </div>
                     <div class="col">
                         <button class="btn btn-secondary btn-block" (click)="add()" type="submit">Annuler</button>
@@ -42,7 +38,7 @@
 
 
 <div class="container">
-    <h1>Liste Produits</h1>
+    <h1>Liste Références</h1>
         <input class="form-control" (keyup)="filter($event.target)" placeholder="Filter">
     
 </div>

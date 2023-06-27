@@ -16,16 +16,17 @@ import { Vehicule } from 'src/app/models/vehicule';
 export class ProduitComponent implements OnInit {
 
   produitSelected: any={
-    title:''
+    name:'',problemes:[]
   }
   
-
+  probleme: any;
+  problemes: any=[]
   hideAdd:boolean=true
   addButton:boolean=true
   add(){
     this.addButton=true
     this.produitSelected = {
-      title:''
+      name:'',problemes:[]
     }
 
    
@@ -36,6 +37,7 @@ export class ProduitComponent implements OnInit {
   constructor(private dataservice:DataService, private activateRoute: ActivatedRoute){}
  
   ngOnInit(): void {
+    this.getProbleme()
     this.showAll()
   }
 
@@ -53,23 +55,40 @@ export class ProduitComponent implements OnInit {
 
   }
 
+  getProbleme() {
+    
+    this.dataservice.getProbleme().subscribe(
+      (data:any) => {
+        this.probleme = data
+        console.log(data);
+        
+      }
+    )
+    console.log("111",this.probleme);
+    
+
+  }
+
   filter(event:any){
     this.dataSource.filter = event.value
   }
 
-  addVille = new FormGroup({
-    produit: new FormControl('',[Validators.required, Validators.pattern("[a-z A-Z 0-9]*")])
+  addProduit = new FormGroup({
+    produit: new FormControl('',[Validators.required, Validators.pattern("[a-z A-Z 0-9]*")]),
+    Probleme:new FormControl('',Validators.required)
   })
 
   get produit() {
-    return this.addVille.controls['produit'];
+    return this.addProduit.controls['produit'];
+  }
+
+  get Probleme() {
+    return this.addProduit.controls['Probleme'];
   }
 
 
-  vehicules:any=[]
 
-
-  displayedColumns = ['id','title','mod','supp'];
+  displayedColumns = ['id','name','mod','supp'];
   dataSource:any = [];
   //name = this.activateRoute.snapshot.paramMap.get('name')
   idUser = sessionStorage.getItem('user');
@@ -79,32 +98,45 @@ export class ProduitComponent implements OnInit {
 
 
   addNew(){
-    this.produitSelected.title=this.addVille.value.produit
+    this.problemes.forEach((element:any) => {
+      this.produitSelected.problemes.push({id:element})
+    });
     
     this.dataservice.addProduit( this.produitSelected).subscribe(
       (data:any) => {
-        
+        this.ngOnInit()
       }
     )
-    this.ngOnInit()
+    
     this.hideAdd=!this.hideAdd
   }
 
   onMod(produit:any){
     this.addButton=false
     this.hideAdd=false
-    this.produitSelected.title = produit.title
+    this.problemes=[]
+    this.produitSelected.name = produit.name
     this.produitSelected.id = produit.id
+    produit.problemes.forEach((element:any) => {
+      const result = this.problemes.filter((i:any) => i === element.id).length;
+      if (result==0) {
+        
+        this.problemes.push(element.id)
+      }
+      
+    });
 
-
+   console.log(this.problemes);
+   
     
   }
 
-  modVehicule(produit:any){
-   
+  modProduit(produit:any){
+    this.problemes.forEach((element:any) => {
+      this.produitSelected.problemes.push({id:element})
+    });
+    //console.log("*****",this.produitSelected);
     this.dataservice.editProduit(this.produitSelected).subscribe(()=>{
-      
-      produit = this.produitSelected
       this.showAll()
     })
     this.hideAdd=!this.hideAdd
@@ -113,9 +145,9 @@ export class ProduitComponent implements OnInit {
 
   onDelete(id:any){
     this.dataservice.deleteProduit(id).subscribe(
-      ()=>{}
+      ()=>{this.showAll()}
     )
-    this.showAll()
+    
   }
 
  

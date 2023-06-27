@@ -1,119 +1,168 @@
-<app-navbar *ngIf="idUser!=null && is_admin==0"></app-navbar>
+<app-navbar *ngIf="idUser!=null && is_admin!='ADMIN'"></app-navbar>
 
-<div *ngIf="idUser!=null && is_admin==0" class="container">
+<div *ngIf="idUser!=null && is_admin!='ADMIN'"  class="container" >
+      
+
     <div class="form-group m-4 row">
-    <label class="col-sm-2  col-form-label" for="ville">Ville</label>
-    <div class="col-sm-5">
-        <select [(ngModel)]="selectedville.id" required [(ngModel)]="newForm.villeId" (change)="onSelectVille($event.target) ;valider()" class="form-control" name="ville" id="">
-            <option value="0">-</option>
-            <option *ngFor="let item of ville" [value]="item.id">{{item.title}}</option>
-        </select>
-        <small *ngIf="newForm.villeId==0" id="fileHelpId" style="color: red;" class="form-text"> * champ obligatoire choisir une ville </small>
-    </div>
+      <label class="col-sm-2  col-form-label" for="ville"><b>Ville <small *ngIf="newForm.villeId==0" id="fileHelpId" style="color: red;" class="form-text">*</small></b></label>
+      <div class="col-sm-5">
+          <mat-form-field  >
+              <mat-select  [(ngModel)]="newForm.villeId" (selectionChange)="onSelectVille($event.value)"  name="ville" placeholder="ville" >
+                <mat-option>
+                  <ngx-mat-select-search  (keyup)="fVille($event)"></ngx-mat-select-search>
+                </mat-option>
+                <mat-option *ngFor="let item of ville" [value]="item.id">
+                  {{item.name}}
+                </mat-option>
+              </mat-select>
+          </mat-form-field>
+          
+      </div>
     
     </div>
     <div class="form-group m-4 row">
-        <label class="col-sm-2  col-form-label" for="">Véhicule</label>
-        <div class="col-sm-5">
         
-        <select  [(ngModel)]="newForm.vehiculeId" (change)="valider()" class="form-control" name="vehicule" id="">
-            <option selected value="0">-</option>
-            <option *ngFor="let item of vehicule" [value]="item.id">{{item.title}}</option>
-        </select>
-        <small *ngIf="newForm.vehiculeId==0" id="fileHelpId" style="color: red;" class="form-text"> * champ obligatoire choisir une véhicule </small>
+        <label class="col-sm-2  col-form-label" for=""><b>Véhicule <small *ngIf="newForm.vehiculeId==0" id="fileHelpId" style="color: red;" class="form-text">*</small></b></label>
+        <div class="col-sm-5">
+            <mat-form-field >
+                <mat-select [(ngModel)]="newForm.vehiculeId"  name="vehicule" placeholder="Véhicule" >
+                  <mat-option>
+                    <ngx-mat-select-search  (keyup)="fVehicule($event)"></ngx-mat-select-search>
+                  </mat-option>
+                  <mat-option *ngFor="let item of vehicule" [value]="item.id">
+                    {{item.name}}
+                  </mat-option>
+                </mat-select>
+            </mat-form-field>
+        
         </div>
         
     </div>
+
     {{newForm | json}}
+
     <div class="form-group m-4 row">
-        <label class="col-sm-2  col-form-label" for="">Produit</label>
+        <label class="col-sm-2  col-form-label" for=""><b>Produit <small *ngIf="newForm.produitId==0" id="fileHelpId" style="color: red;" class="form-text">*</small></b></label>
         <div class="col-sm-5">
-        <select [(ngModel)]="selectedproduit.id" [(ngModel)]="newForm.produitId" (change)="onSelectProduit($event.target);valider()" class="form-control" name="produit" id="">
-            <option value="0">-</option>
-            <option *ngFor="let item of produit" [value]="item.id">{{item.title}}</option>
-            </select>
-            <small *ngIf="newForm.produitId==0" id="fileHelpId" style="color: red;" class="form-text"> * champ obligatoire choisir un produit </small>
+            <mat-form-field >
+                <mat-select [(ngModel)]="newForm.produitId"  (selectionChange)="onSelectProduit($event.value);valider()" name="produit" placeholder="Produit" >
+                  <mat-option>
+                    <ngx-mat-select-search  (keyup)="fProduit($event)"></ngx-mat-select-search>
+                  </mat-option>
+                  <mat-option *ngFor="let item of produit" [value]="item.id">
+                    {{item.name}}
+                  </mat-option>
+                </mat-select>
+            </mat-form-field>
+        
+      </div>
+    </div>
+    
+    <div class="form-group m-4 row">
+        <label class="col-sm-2  col-form-label" for=""><b>Probleme/Panne <small *ngIf="newForm.problemeId==0" id="fileHelpId" style="color: red;" class="form-text">*</small></b></label>
+        <div class="col-sm-5">
+            <mat-form-field >
+                <mat-select [(ngModel)]="newForm.problemeId"  (selectionChange)="onSelectProbleme($event.value);valider()"  name="probleme" placeholder="Probleme" >
+                  <mat-option>
+                    <ngx-mat-select-search  (keyup)="fProbleme($event)"></ngx-mat-select-search>
+                  </mat-option>
+                  <mat-option *ngFor="let item of probleme" [value]="item.id">
+                    {{item.name}}
+                  </mat-option>
+                </mat-select>
+            </mat-form-field>
+           
+            
         </div>
         
     </div>
     <div class="form-group m-4 row">
-        <label class="col-sm-2  col-form-label" for="">Probleme/Panne</label>
+        <label class="col-sm-2  col-form-label" for=""><b>Solution <small *ngIf="newForm.statut==1 && !Traite" id="fileHelpId" style="color: red;" class="form-text">*</small></b></label>
         <div class="col-sm-5">
-            <select [(ngModel)]="selectedprobleme.id" [(ngModel)]="newForm.problemeId" (change)="onSelectProbleme($event.target);valider()" class="form-control" name="probleme" id="">
-                <option value="0">-</option>
-                <option *ngFor="let item of probleme" [value]="item.id">{{item.title}}</option>
-            </select>
-            <small *ngIf="newForm.problemeId==0" id="fileHelpId" style="color: red;" class="form-text"> * champ obligatoire choisir le panne </small>
+            <mat-form-field >
+                <mat-select [(ngModel)]="newForm.solutionId"  (selectionChange)="valider()" name="solution" placeholder="Solution" >
+                  <mat-option>
+                    <ngx-mat-select-search  (keyup)="fSolution($event)"></ngx-mat-select-search>
+                  </mat-option>
+                  <mat-option *ngFor="let item of solution" [value]="item.id">
+                    {{item.name}}
+                  </mat-option>
+                </mat-select>
+            </mat-form-field>
+            
+            
         </div>
         
     </div>
     <div class="form-group m-4 row">
-        <label class="col-sm-2  col-form-label" for="">Solution</label>
-        <div class="col-sm-5">
-            <select [(ngModel)]="newForm.solutionId" (change)="valider()" class="form-control"  name="solution" id="">
-                <option value="0">-</option>
-                <option *ngFor="let item of solution" [value]="item.id">{{item.title}}</option>
-            </select>
-            <small *ngIf="newForm.statut==1 && !Traite" id="fileHelpId" style="color: red;" class="form-text"> * champ obligatoire choisir la Solution </small>
-        </div>
-        
+      <p>
+        Changement du composant ? <mat-checkbox [formControl]="disableSelect" (change)="check();valider()"></mat-checkbox>
+      </p>
+      <label class="col-sm-2  col-form-label" for=""><b>Référence <small *ngIf="newForm.refId==0 && disableSelect.value==true" id="fileHelpId" style="color: red;" class="form-text">*</small></b></label>
+      <div class="col-sm-5">
+        {{disableSelect.value}}
+          <mat-form-field >
+              <mat-select [(ngModel)]="newForm.refId" (selectionChange)="valider()" [disabled]="disableSelect.value==false" name="ref" placeholder="Référence" >
+                <mat-option>
+                  <ngx-mat-select-search  (keyup)="fRef($event)"></ngx-mat-select-search>
+                </mat-option>
+                <mat-option *ngFor="let item of ref" [value]="item.id">
+                  {{item.name}}
+                </mat-option>
+              </mat-select>
+          </mat-form-field>
+          
+          
+      </div>
+      
     </div>
     <div class="form-group m-4 row">
-            <label class="col-sm-2  col-form-label" for="description">Description</label>
+            <label class="col-sm-2  col-form-label" for="description"><b>Description</b></label>
             <div class="col-sm-5">
                 <textarea [(ngModel)]="newForm.description" class="form-control" placeholder="Description de panne" name="description" id="" rows="3"></textarea>
             </div>
     </div>
     <div class="form-group m-4 row">
-        <label class="col-sm-2  col-form-label" for="">Statut</label>
-        <div class="col-sm-5">
-            <div class="row">
-                <div [ngSwitch]="newForm.statut" class="col col-lg-3">
-                en cours <input *ngSwitchCase="0" (change)="valider()"   checked [(ngModel)]="newForm.statut" type="radio" [value]="0" name="statut" id="">
-                         <input *ngSwitchCase="1" (change)="valider()"  [(ngModel)]="newForm.statut" type="radio" [value]="0" name="statut" id="">
-                
-            </div>
-            
-                
-            <div [ngSwitch]="newForm.statut" class="col col-lg-2">
-                <div class="row">
-                    <div class="col-sm-8">traité</div>
-                <div class="col-sm-2">
+        <label class="col-sm-2  col-form-label" for=""><b>Statut</b></label>
+        <table class="table col-sm">
+            <tr>
+                <td class="col-sm-1">en cours</td>
+                <td [ngSwitch]="newForm.statut">
+                    <input *ngSwitchCase="0" (change)="valider()"   checked [(ngModel)]="newForm.statut" type="radio" [value]="0" name="statut" id="">
+                    <input *ngSwitchCase="1" (change)="valider()"  [(ngModel)]="newForm.statut" type="radio" [value]="0" name="statut" id="">
+                </td>
+            </tr>
+            <tr >
+                <td class="col-sm-1">traité</td>
+                <td [ngSwitch]="newForm.statut">
                     <input *ngSwitchCase="0" (change)="valider()"  [(ngModel)]="newForm.statut" type="radio" [value]="1" name="statut" id="">
                     <input *ngSwitchCase="1" (change)="valider()"  checked [(ngModel)]="newForm.statut" type="radio" [value]="1" name="statut" id="">
-                </div>
-                </div>
-                
-                
-            </div>
-            </div>
-            
-        </div>
+                </td>
+            </tr>
+        </table>
+        
        
         
     </div>
     <div class="form-group m-4 row">
-        <label class="col-sm-2  col-form-label" for="">Photo</label>
+        <label class="col-sm-2  col-form-label" for=""><b>Photo</b></label>
         <div class="col-sm-5">
-            <input type="file" [(ngModel)]="selectedFile" (change)="onFileSelected($event)" class="form-control-file" name="" id="" placeholder="" aria-describedby="fileHelpId">
+            <input type="file" (change)="charge();onFileSelected($event)" id="file" class="form-control" name="file">
             <small id="fileHelpId" class="form-text text-muted"> (max taille) </small>
         </div>
         
     </div>
+    <small *ngIf="!issetId && !allValid" id="fileHelpId" style="color: red;" class="form-text"> nb:(*) champ obligatoire</small>
     
     <div class="form-group mt-5 row text-center">
-        
+       
         <div class="col-sm-3">
-            <a  *ngIf="!issetId && !allValid" [ngClass]="{'disabled':'disabled'}"  (click)="addReclamation()" type="submit" class="btn btn-success" href="/forms" >Enregistrer</a>
-            <a  *ngIf="!issetId && allValid"  (click)="addReclamation()" type="submit" class="btn btn-success" href="/home" >Enregistrer</a>
+            <a  *ngIf="!allValid || !fileValid" [ngClass]="{'disabled':'disabled'}" style="width: 150px;margin-top: 5px;" type="submit" class="btn btn-success" href="/forms" >Enregistrer</a>
+            <a  *ngIf=" allValid && fileValid"  (click)="addReclamation()" style="width: 150px;margin-top: 5px;" type="submit" class="btn btn-success" href="/home" >Enregistrer</a>
         </div>
         <div class="col-sm-1">
-            <a  type="submit" class="btn btn-danger" href="/home" >Annuler</a>
+            <a  type="submit" class="btn btn-danger" style="width: 150px;margin-top: 5px;margin-bottom: 20px;" href="/home" >Annuler</a>
             
         </div>
     </div>
 </div>
-
-
-
- 

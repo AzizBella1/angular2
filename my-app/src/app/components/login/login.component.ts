@@ -4,6 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { User } from 'src/app/models/user';
 import { DataService } from 'src/app/sevices/data.service';
 import {Router} from "@angular/router"
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Request } from 'src/app/models/request';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +13,8 @@ import {Router} from "@angular/router"
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  constructor(private dataservice:DataService, private activateRoute: ActivatedRoute, private router: Router){}
+  error: any;
+  constructor(private dataservice:DataService, private activateRoute: ActivatedRoute, private router: Router,private http:HttpClient){}
 
 
   UserLog: User[] = [];
@@ -42,7 +45,68 @@ export class LoginComponent implements OnInit {
 
   notLogin:boolean=false
 
+
+  doSignin() {
+		const request: any = { username: this.login.get('username')?.value, password: this.login.get('password')?.value};
+      		//alert("login : " + request.username+"--"+request.password)
+			
+
+    
+      		//alert("login : " + request.username)
+		this.dataservice.signin(request).subscribe((result:any)=> {
+						
+          
+          sessionStorage.setItem('is_admin', result.role)
+          if (result.role!='ADMIN') {
+            this.router.navigate(['/home'])
+          } else {
+            this.router.navigate(['/acceuil'])
+          }
+          /* 
+            const token0 = sessionStorage.getItem('token')
+            this.http.get<any>('http://info.geodaki.com:4243/Api/clients', {
+            headers: new HttpHeaders({
+              'Content-Type': 'application/json',
+              'Authorization': ''+ token0
+            }),
+            responseType: 'json'
+            }).subscribe(
+            (resp) => {
+              this.UserLog=resp.filter((res:any)=>res.username==sessionStorage.getItem('user'))
+              console.log(this.UserLog);
+            },
+            (error) => {
+              console.log(error);
+            }
+            );
+              
+         */    
+          
+				  console.log('====================================',result);
+					console.log(result.token);
+					console.log('*************************************'
+						);
+					this.dataservice.devices(result.token)
+					
+					console.log('====================================');
+		},
+				() => {
+          this.notLogin=true
+					this.error = 'Either invalid credentials or something went wrong';
+				});
+    
+	}
+  
+  
   Login(){
+    /*
+    let formData: FormData = new FormData();
+    let username:any=this.login.get('username')?.value
+    let password:any=this.login.get('password')?.value
+    formData.append('username', username);
+    formData.append('password', password);
+    this.http.post("http://192.168.100.254:4243/signin",formData)
+*/
     this.dataservice.getUser().subscribe(
       (data:any) => {
         this.User = data.filter(
@@ -53,11 +117,7 @@ export class LoginComponent implements OnInit {
           sessionStorage.setItem('user',this.User[0].id ); 
           sessionStorage.setItem('is_admin',this.User[0].is_admin ); 
           //localStorage.setItem('user', this.User[0].id);
-          if (this.User[0].is_admin==0) {
-            this.router.navigate(['/home'])
-          } else {
-            this.router.navigate(['/acceuil'])
-          }
+          
           
         }else{
           this.notLogin=true
