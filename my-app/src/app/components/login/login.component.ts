@@ -54,11 +54,33 @@ export class LoginComponent implements OnInit {
     
       		//alert("login : " + request.username)
 		this.dataservice.signin(request).subscribe((result:any)=> {
-						
+          let date = new Date();
+          let hours = date.getHours();
+          let hourExp = date.getHours();
+          let minutes = date.getMinutes()
           
+          let seconds = 0;
+
+          if (minutes<5) {
+            
+            minutes = 0
+          }else{
+            
+            minutes = date.getMinutes()-4
+          }
+
+          if (hours == 23) {
+            
+            hours = 0;
+          }else{
+            
+            hours = date.getHours()+1;
+          }
+          this.dateExp = hours+":"+minutes+":"+seconds
           sessionStorage.setItem('is_admin', result.role)
+          sessionStorage.setItem('tokenExp',this.dateExp); 
           if (result.role!='ADMIN') {
-            this.router.navigate(['/home'])
+            this.router.navigate(['/forms'])
           } else {
             this.router.navigate(['/acceuil'])
           }
@@ -97,7 +119,7 @@ export class LoginComponent implements OnInit {
     
 	}
   
-  
+  dateExp:any
   Login(){
     /*
     let formData: FormData = new FormData();
@@ -107,6 +129,8 @@ export class LoginComponent implements OnInit {
     formData.append('password', password);
     this.http.post("http://192.168.100.254:4243/signin",formData)
 */
+
+
     this.dataservice.getUser().subscribe(
       (data:any) => {
         this.User = data.filter(
@@ -114,10 +138,14 @@ export class LoginComponent implements OnInit {
         )
 
         if (this.User != '') {
+          
+
           sessionStorage.setItem('user',this.User[0].id ); 
+          
+
           sessionStorage.setItem('is_admin',this.User[0].is_admin ); 
           //localStorage.setItem('user', this.User[0].id);
-          
+         
           
         }else{
           this.notLogin=true

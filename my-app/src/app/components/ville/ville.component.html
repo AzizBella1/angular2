@@ -2,7 +2,7 @@
 
 <div *ngIf="idUser!=null && is_admin=='ADMIN'" >
 
-    <div *ngIf="hideAdd" class="container py-1"> 
+   <!--<div *ngIf="hideAdd" class="container py-1"> 
         <button type="button" style="width: 150px;" (click)="add()" class="btn btn-outline-primary">new</button><br><br>
         
        
@@ -35,11 +35,11 @@
     </form>
     <hr>
     
-</div>
+</div>-->
 
 
 
-<div class="container ">
+<div class="container " style="margin-top: 30px;">
     <h1>Liste Villes</h1>
     <input class="form-control" (keyup)="filter($event.target)" placeholder="Filter">
     <mat-table #table matSort [dataSource]="dataSource">
@@ -55,14 +55,7 @@
         <mat-header-cell *matHeaderCellDef mat-sort-header> Ville </mat-header-cell>
         <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
         </ng-container>
-        <ng-container matColumnDef="mod">
-            <mat-header-cell *matHeaderCellDef> Modifier </mat-header-cell>
-            <mat-cell *matCellDef="let element"> <button (click)="onMod(element)" class="btn btn-primary" >mod</button> </mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="supp">
-            <mat-header-cell *matHeaderCellDef > Supprimer </mat-header-cell>
-            <mat-cell *matCellDef="let element"> <button (click)="onDelete(element.id)" class="btn btn-sm btn-danger" ><mat-icon>delete_forever</mat-icon></button> </mat-cell>
-        </ng-container>
+        
 
         
 

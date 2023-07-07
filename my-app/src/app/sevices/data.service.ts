@@ -41,9 +41,10 @@ export class DataService {
 
 
 	signin(request: Request): Observable<any> {
-    console.log(request.username);
+    //console.log(request);
 		return this.http.post<any>(this.baseUrl + 'signin', request, {headers: new HttpHeaders({ 'Content-Type': 'application/json' })}).pipe(map((resp) => {
 			sessionStorage.setItem('user', request.username);
+      
 			sessionStorage.setItem('token', 'HTTP_TOKEN ' + resp.token);
       console.log("++++",resp);
       
@@ -84,27 +85,40 @@ export class DataService {
                                                                             ////  Reclamation
  
 
-  
+  /*
   getReclamation(): any {
     return this.http.get<any>(`${this.urlReclamation}`);
-  }
-
-
-  getIdReclamation(id:any): any {
-    return this.http.get<any>(`${this.urlReclamation}/${id}`);
   }
 
   addForm(form:any){
     return this.http.post<any>(this.urlReclamation,form);
   }
 
+  getIdReclamation(id:any): any {
+    return this.http.get<any>(`${this.urlReclamation}/${id}`);
+  }
+
   editReclamation(form:any){
     return this.http.put(`${this.urlReclamation}/${form.id}`,form )
 
   }
+*/
+  getIdReclamation(id:any): any {
+    return this.http.get<any>(this.baseUrl + 'Api/reclamations/'+id,{
+			headers: new HttpHeaders({
+			  'Content-Type': 'application/json',
+			  'Authorization': ''+ this.token0,
+        'Access-Control-Allow-Origin': '*'
+			}),
+			responseType: 'json'
+		  });
+  }
+
+
+  
 
  
-/*
+
   getReclamation(): any {
     return this.http.get<any>(this.baseUrl + 'Api/reclamations', {
 			headers: new HttpHeaders({
@@ -114,7 +128,28 @@ export class DataService {
 			responseType: 'json'
 		  });
   }
-*/
+
+  addForm(form:any){
+    
+    return this.http.post<any>(this.baseUrl + 'Api/reclamations', form,{
+			headers: new HttpHeaders({
+			  'Content-Type': 'application/json',
+			  'Authorization': ''+ this.token0
+			}),
+			responseType: 'json'
+		  });
+  }
+
+  editReclamation(form:any){
+    return this.http.put<any>(this.baseUrl + 'Api/reclamations', form,{
+			headers: new HttpHeaders({
+			  'Content-Type': 'application/json',
+			  'Authorization': ''+ this.token0
+			}),
+			responseType: 'json'
+		  });
+  }
+
   
   
 
@@ -127,7 +162,7 @@ export class DataService {
 
   uploadImg(formData: FormData){
     alert("uploading img")
-    this.http.post('http://info.geodaki.com:4242/upload', formData).subscribe(
+    this.http.post('http://info.geodaki.com:4243/upload', formData).subscribe(
       (response) => {
         if(response)
           alert('Upload success:')
@@ -140,6 +175,14 @@ export class DataService {
       (error) => {
         console.error('Upload error:', error);
         // Handle error response
+      }
+    );
+  }
+
+  getImage(){
+    this.http.get('http://info.geodaki.com:4243/dowload?recid=39').subscribe(
+      (response) => {
+        
       }
     );
   }
@@ -158,7 +201,7 @@ export class DataService {
 
 
                                                                                               //////    User
-  getUser(): any {
+  /*getUser(): any {
     return this.http.get<any>(this.urlUser);
   }
 
@@ -174,8 +217,8 @@ export class DataService {
   deleteUser(id:any){
     return this.http.delete(`${this.urlUser}/${id}`)
   }
+*/
 
-/*
   getUser(): any {
     return this.http.get<any>(this.baseUrl + 'Api/clients', {
 			headers: new HttpHeaders({
@@ -211,7 +254,7 @@ export class DataService {
 		  });
   }
   
-*/
+
   
 
 
@@ -237,7 +280,7 @@ export class DataService {
 
 
                                                                                               ///   Vehicules
-  getVehicule(): any {
+   /*getVehicule(): any {
     return this.http.get<any>(this.urlVehicule);
   }
 
@@ -253,8 +296,16 @@ export class DataService {
 
   deleteVehicule(id:any){
     return this.http.delete(`${this.urlVehicule}/${id}`)
+  } */
+
+  getTanger(){
+    return this.http.get<any>('http://tanger.geodaki.com:3000/rpc/wdevices')
   }
- /* getVehicule(): any {
+
+  getMarrakech(){
+    return this.http.get<any>('http://geodaki.com:3000/rpc/wdevices')
+  }
+ getVehicule(): any {
     return this.http.get<any>(this.baseUrl + 'Api/devices', {
 			headers: new HttpHeaders({
 			  'Content-Type': 'application/json',
@@ -293,12 +344,12 @@ export class DataService {
 			responseType: 'json'
 		  });
   }
-  */
+ 
 
 
                                                                                               ////  Villes
 
-  getVille(): any {
+   /* getVille(): any {
     return this.http.get<any>(this.urlVille);
   }
 
@@ -316,7 +367,7 @@ export class DataService {
     return this.http.delete(`${this.urlVille}/${id}`)
   }
  
- /* 
+  */
   getVille(): any {
 		
 		return this.http.get<any>(this.baseUrl + 'Api/villes', {
@@ -355,14 +406,14 @@ export class DataService {
 		  });
   }
  
-  */
+
 
 
                                                                                               /////   Produits
   
 
   
-
+/*
   getProduit(){
     return this.http.get<any>(this.urlProduit);
   }
@@ -379,8 +430,8 @@ export class DataService {
   deleteProduit(id:any){
     return this.http.delete(`${this.urlProduit}/${id}`)
   }
-
-  /*
+*/
+  
   getProduit(): any {
     return this.http.get<any>(this.baseUrl + 'Api/products', {
 			headers: new HttpHeaders({
@@ -426,10 +477,10 @@ export class DataService {
 		  });
   }
 
-*/
+
 
                                                                                             /////   Probleme
-
+/* 
   getProbleme(): any {
     return this.http.get<any>(this.urlProbleme);
   }
@@ -448,7 +499,7 @@ export class DataService {
     return this.http.delete(`${this.urlProbleme}/${id}`)
   }
 
-/* 
+*/
   getProbleme(): any {
     return this.http.get<any>(this.baseUrl + 'Api/problemes', {
 			headers: new HttpHeaders({
@@ -492,9 +543,9 @@ export class DataService {
 			responseType: 'json'
 		  });
   }
-*/ 
+ 
                                                                                               /////   Solutions
- getSolution(): any {
+  /*getSolution(): any {
     return this.http.get<any>(this.urlSolution);
   }
   addSolution(produit:any){
@@ -509,7 +560,7 @@ export class DataService {
   deleteSolution(id:any){
     return this.http.delete(`${this.urlSolution}/${id}`)
   }
- /*
+*/
   getSolution(): any {
     return this.http.get<any>(this.baseUrl + 'Api/solutions', {
 			headers: new HttpHeaders({
@@ -552,7 +603,7 @@ export class DataService {
 			responseType: 'json'
 		  });
   }
-*/
+
   ////   Users
 
   

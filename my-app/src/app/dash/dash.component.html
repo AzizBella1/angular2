@@ -2,7 +2,43 @@
 
 <div *ngIf="idUser!=null && is_admin=='ADMIN'" class="container mt-5">
   <h2>Dashboard</h2>
-  <div class="row">
+  <div class="row" style="padding-bottom: 8px;">
+    
+    <div class="col mt-1">
+      <div class="Div">
+        <div class="row" ><h2 style="text-align: center;">Nb totale des reclamations </h2></div>
+        <div>
+          <p style="text-align: center;font-size: 50px;padding-top: 8px;padding-bottom: 10px;color: blue;">{{reclamation?.length}} </p>
+
+        </div>
+        
+      </div>
+      
+    </div>
+    <div class="col mt-1">
+      <div class="Div">
+        <div class="row" ><h2 style="text-align: center;">Nb totale des produits </h2></div>
+        <div>
+          <p style="text-align: center;font-size: 50px;padding-top: 8px;padding-bottom: 10px;color: blue;">{{produit?.length}} </p>
+
+        </div>
+        
+      </div>
+      
+    </div>
+    <div class="col mt-1">
+      <div class="Div">
+        <div class="row" ><h2 style="text-align: center;">Nb totale des véhicules </h2></div>
+        <div>
+          <p style="text-align: center;font-size: 50px;padding-top: 8px;padding-bottom: 10px;color: blue;">{{vehicule?.length}} </p>
+
+        </div>
+        
+      </div>
+      
+    </div>
+  </div>
+  <div class="row" style="padding-bottom: 8px;">
     <div class="col mt-1">
  
       <div class="Div">
@@ -18,9 +54,9 @@
                   <th>Nb de panne</th>
                 </tr>
                 <tr *ngFor="let p of pro">
-                  <td>{{p.id}}</td>
-                  <td scope="row">{{p.name}}</td>
-                  <td>{{p.rec}}</td>
+                  <td>{{p?.id}}</td>
+                  <td scope="row">{{p?.name}}</td>
+                  <td>{{p?.rec}}</td>
                 </tr>
                
             </table>
@@ -32,7 +68,7 @@
       
     </div>
   </div>
-  <div class="row ">
+  <div class="row " style="padding-bottom: 8px;">
     
     <div class="col mt-1">
  
@@ -47,7 +83,7 @@
       
     </div>
   </div>
-  <div class="row ">
+  <div class="row " style="padding-bottom: 8px;">
     <div class="col mt-1">
       <div class="Div">
         <div class="row" ><h2 style="text-align: center;">Nb de Reclamation par ville</h2></div>
@@ -60,7 +96,9 @@
     </div>
   </div>
   
-  <div class="row">
+  <div class="row" style="padding-bottom: 20px;">
+    
+    
     <div class="col mt-1">
       <div class="Div">
         <div class="row" ><h2 style="text-align: center;">Statut des Reclamation</h2></div>
@@ -72,7 +110,7 @@
     </div>
     <div class="col mt-1">
       <div class="Div">
-        <div class="row" ><h2 style="text-align: center;">Radar</h2></div>
+        <div class="row" ><h2 style="text-align: center;">Nb Véhicule par ville</h2></div>
         <div class="row graph">
           <canvas id="radar"></canvas>
         </div>

@@ -39,9 +39,9 @@ export class ProblemeComponent implements OnInit {
   test(x:any){
     
     
-    console.log("p ",this.Probleme);
+    //console.log("p ",this.Probleme);
     
-    console.log(x);
+    //console.log(x);
     
   }
 
@@ -58,7 +58,7 @@ export class ProblemeComponent implements OnInit {
     this.dataservice.getSolution().subscribe(
       (data:any) => {
         this.solution = data
-        console.log(data);
+        //console.log(data);
         
       }
     )
@@ -91,7 +91,7 @@ export class ProblemeComponent implements OnInit {
   getProbleme() {
     this.dataservice.getProbleme().subscribe(
       (data:any) => {
-        console.log(data);
+        //console.log(data);
         this.dataSource = new MatTableDataSource<Element>(data)
         
         this.dataSource.paginator = this.paginator;
@@ -137,7 +137,7 @@ export class ProblemeComponent implements OnInit {
     });
     //this.Probleme.solutions = probleme.solutions
 
-    console.log(this.solutions);
+    //console.log(this.solutions);
     
     
   }

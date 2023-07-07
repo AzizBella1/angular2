@@ -34,14 +34,18 @@
             <li *ngIf="is_admin=='ADMIN'" routerLinkActive="active" class="nav-item active">
                 <a  class="nav-link" routerLink="/dashboard" href="/dashboard"><b>Dashboard</b></a>
             </li>
-            <li class="logout" >
-                <button (click)="Logout()" style="position: absolute;right: 0;" class="btn btn-outline-warning">Logout</button>
-            </li>
+            
             
             
         </ul>
        
+        <span class="navbar-text logout">
+            <p>{{idUser}} &nbsp; <button (click)="Logout()"  class="btn btn-sm btn-warning ">Logout</button></p>
+        </span>
+        
     </div>
 </nav>
+
+
 
 <script></script>

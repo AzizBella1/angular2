@@ -1,5 +1,5 @@
 import { Component, OnInit,ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from 'src/app/sevices/data.service';
 import { MatTableDataSource} from '@angular/material/table';
 import { MatPaginator} from '@angular/material/paginator';
@@ -23,30 +23,30 @@ export class TestComponent implements OnInit{
  
   
 
-  constructor(private dataservice:DataService, private activateRoute: ActivatedRoute){}
+  constructor(private dataservice:DataService, private activateRoute: ActivatedRoute,private router: Router){}
  
   ngOnInit(): void {
+    this.router.navigate(['/forms'])
     this.showAll()
+    
   }
 
 
-  
+  data:any=[]
   showAll() {
     this.dataservice.getReclamation().subscribe(
       (data:any) => {
         
-        data.forEach((element:any) => {
-          if (element.statut==0) {
-            element.st='En cours'
-          }else if (element.statut==1) {
-            element.st='Traité'
-          } else {
-            element.st='Validé'
-          }
+       
+        let i=0
+        data.forEach((l:any) => {
+          var val={id:l.id,statut:l.statut,ville:l.device.ville.name,vehicule:l.device.name,user:l.client.username,dateCreation:l.date_creation,dateModification:l.date_modification}
+          this.data[i]=val
+          i++
         });
-        console.log(data);
+        //console.log(data);
         
-        this.dataSource = new MatTableDataSource<Element>(data)
+        this.dataSource = new MatTableDataSource<Element>(this.data)
         
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort
@@ -62,7 +62,7 @@ export class TestComponent implements OnInit{
   
 
 
-  displayedColumns = ['id','user','villeId','vehiculeId','dateCreation','dateModification','st','mod'];
+  displayedColumns = ['id','user','ville','vehicule','dateCreation','dateModification','statut','mod'];
   dataSource:any = [];
   //name = this.activateRoute.snapshot.paramMap.get('name')
   idUser = sessionStorage.getItem('user');

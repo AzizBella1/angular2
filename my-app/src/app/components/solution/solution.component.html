@@ -61,11 +61,11 @@
                 </ng-container>
                 <ng-container matColumnDef="mod">
                     <mat-header-cell *matHeaderCellDef> Modifier </mat-header-cell>
-                    <mat-cell *matCellDef="let element"> <button (click)="onMod(element)" class="btn btn-primary" >mod</button> </mat-cell>
+                    <mat-cell *matCellDef="let element"> <button *ngIf="element.id!=4" (click)="onMod(element)" class="btn btn-primary" >mod</button> </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="supp">
                     <mat-header-cell *matHeaderCellDef > Supprimer </mat-header-cell>
-                    <mat-cell *matCellDef="let element"> <button (click)="onDelete(element.id)" class="btn btn-sm btn-danger" ><mat-icon>delete_forever</mat-icon></button> </mat-cell>
+                    <mat-cell *matCellDef="let element"> <button *ngIf="element.id!=4" (click)="onDelete(element.id)" class="btn btn-sm btn-danger" ><mat-icon>delete_forever</mat-icon></button> </mat-cell>
                 </ng-container>
         
                 

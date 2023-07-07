@@ -1,5 +1,5 @@
-import { Component, OnInit,ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, ElementRef, OnInit,QueryList,ViewChild, ViewChildren } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from 'src/app/sevices/data.service';
 import { MatTableDataSource} from '@angular/material/table';
 import { MatPaginator} from '@angular/material/paginator';
@@ -228,46 +228,44 @@ export class AdminHomeComponent {
   }*/
 
   
-  newForm: any= {
-    vehiculeId:0,user: 0, villeId: 0 , produitId: 0, problemeId: 0 , solutionId: 0 , description:'',file:'',statut:1,dateCreation: '',dateModification: null
-  }
   
 
  
   
 
-  constructor(private dataservice:DataService, private activateRoute: ActivatedRoute){}
+  constructor(private dataservice:DataService,private router: Router){}
  
   ngOnInit(): void {
+    //this.router.navigate(['/acceuil'])
     this.showAll()
-    
+   
   }
-
-
   
+
+  data:any=[]
   showAll() {
+    
     this.dataservice.getReclamation().subscribe(
       (data:any) => {
         
-        data.forEach((element:any) => {
-          if (element.statut==0) {
-            element.st='En cours'
-          }else if (element.statut==1) {
-            element.st='Traité'
-          } else {
-            element.st='Validé'
-          }
+        let i=0
+        data.forEach((l:any) => {
+          var val={id:l.id,statut:l.statut,ville:l.device.ville.name,description:l.description,vehicule:l.device.name,user:l.client.username,dateCreation:l.date_creation,dateModification:l.date_modification}
+          this.data[i]=val
+          i++
         });
-        console.log(data);
+        //console.log(this.data);
         
-        this.dataSource = new MatTableDataSource<Element>(data)
+        this.dataSource = new MatTableDataSource<Element>(this.data)
         
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort
+        
       }
     )
 
   }
+ 
 
   filter(event:any){
     this.dataSource.filter = event.value
@@ -276,7 +274,7 @@ export class AdminHomeComponent {
   
 
 
-  displayedColumns = ['id','user','villeId','vehiculeId','dateCreation','dateModification','st'];
+  displayedColumns = ['id','user','ville','vehicule','dateCreation','dateModification','statut','description'];
   dataSource:any = [];
   //name = this.activateRoute.snapshot.paramMap.get('name')
   idUser = sessionStorage.getItem('user');
@@ -297,7 +295,41 @@ export class AdminHomeComponent {
     })
 
   }
+ 
+  description:any
+  hide:boolean=true
+  style:any
+  detail(d:any){
+    this.hide=false
+    let desc=d
+    //console.log(desc);
+    this.description=d
+    this.style='opacity:0.5;pointer-events:none;'
+    
+    
+    
+    
+    //this.elem.first.nativeElement.setAttribute("style", "opacity:0.5;")
+    
+  }
+  
+
+  
+
+  hideDetail(){
+    this.style='opacity:1;'
+    this.hide=true
+  }
+
+  acc:boolean=false
+  acctualiser(){
+    if (!this.acc) {
+      
+    }
+  }
 
 
  
 }
+
+

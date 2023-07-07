@@ -3,7 +3,6 @@ import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { Chart, ChartConfiguration, ChartData, ChartOptions, ChartType } from "chart.js";
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { forEach } from 'jszip';
 import { DataService } from '../sevices/data.service';
 
 @Component({
@@ -24,8 +23,10 @@ export class DashComponent implements OnInit {
 
   ngOnInit(): void {
     
-    this.recProduit()
     this.getVilles()
+    this.vehecule()
+    this.getProduit()
+    this.test()
 
    
     
@@ -38,22 +39,22 @@ export class DashComponent implements OnInit {
 
   
 
+
+
   getVilles(){
     
     this.dataservice.getVille().subscribe(
       (data:any) => {
         this.ville=data
 
+
+
         
-
-
-        this.getRecl(this.ville)
         //this.polarArea()
       
       }
       
     )
-    
 
   }
   dVille:any=[]
@@ -65,6 +66,8 @@ export class DashComponent implements OnInit {
     
     this.dataservice.getReclamation().subscribe(
       (data:any) => {
+        //console.log(data);
+        this.reclamation=data
         this.doughnut(data)
         let i = 0
         this.month.forEach((m:any) => {
@@ -73,7 +76,7 @@ export class DashComponent implements OnInit {
           
           data.forEach((element:any) => {
             //console.log(element.dateCreation);
-            var d = new Date(element.dateCreation);
+            var d = new Date(element.date_creation);
             var shortMonthName = new Intl.DateTimeFormat("en-US", { month: "short" }).format;
             var shortName = shortMonthName(d);
             if (shortName==m) {
@@ -93,26 +96,28 @@ export class DashComponent implements OnInit {
         this.lin(this.dMonth)
       })
   }
-  recProduit(){
-    this.dataservice.getReclamation().subscribe(
-      (data:any) => {
-        this.reclamation=data
-      })
+  getProduit(){
+    
     this.dataservice.getProduit().subscribe(
       (data:any) => {
         this.produit=data
+        this.getRecl(this.produit)
     })
+    
       
   }
   pro:any=[]
-  getRecl(v:any){
-    
-    //console.log("rec pro ",this.produit,this.reclamation);
+  getRecl(pro:any){
+    this.dataservice.getReclamation().subscribe(
+      (data:any) => {
+
       let i = 0
-      this.produit.forEach((pr:any) => {
+      pro.forEach((pr:any) => {
+        
         let p = 0
-        this.reclamation.forEach((r:any) => {
-          if (pr.id==r.produitId) {
+        data.forEach((r:any) => {
+          
+          if (r.product.id==pr.id) {
             
             p++
           }
@@ -124,41 +129,39 @@ export class DashComponent implements OnInit {
         
         this.pro[index]=this.produit[index]
       }
-      
 
-      //console.log(i,"p ",this.pro);
       
-      
-      this.dataservice.getReclamation().subscribe(
-        (data:any) => {
-          let i = 0
-          
-          v.forEach((v:any) => {
-            let c = 0
-            data.forEach((r:any) => {
-              if (v.id==r.villeId) {
-                
-                c++
-              }
-            });
-            this.ville[i].x=c
-            this.dVille[i]=c
-            i++
+    })
+
+    this.dataservice.getReclamation().subscribe(
+      (data:any) => {
+        
+        
+        let i = 0
+        this.ville.forEach((v:any) => {
+        
+        
+          let c = 0
+          data.forEach((r:any) => {
+            //console.log(r);
+            if (v.id==r.device.ville.id) {
+              
+              c++
+            }
           });
-          
-          
-         
-          this.bar(this.ville.map((res:any)=>res.x))
-        },
-        
-        )
-        this.test()
-        
-        this.vehecule()
+          this.ville[i].x=c
+          this.dVille[i]=c
+          i++
+        });
       
-      
+        this.bar(this.ville.map((res:any)=>res.x))
+    })
+
+    
     
   }
+
+
   vv:any=[]
   lab:any=['ff','rr','ff']
   bar(x:any){
@@ -190,34 +193,37 @@ export class DashComponent implements OnInit {
 
 
   
-  Vehicule:any=[]
+  vehicule:any
 
   vehecule(){
-        this.dataservice.getVehicule().subscribe((data:any)=>{
-          let i = 0
-          this.ville.forEach((v:any) => {
-            let c = 0
-            data.forEach((veh:any) => {
-              if (v.id==veh.ville.id) {
-                
-                c++
-              }
-            });
+    this.dataservice.getVehicule().subscribe((data:any)=>{
+      this.vehicule=data
+      let i = 0
+      this.ville.forEach((v:any) => {
+        let c = 0
+        data.forEach((veh:any) => {
+          if (v.id==veh.ville.id) {
             
-            this.ville[i].vx=c
-            
-            i++
-            
-            
-          })
-          
-          
-          this.radar()
+            c++
+          }
         });
         
+        this.ville[i].vx=c
+        
+        i++
         
         
-  }
+      })
+      
+      
+      this.radar()
+    });
+    
+    
+    
+}
+
+
   radar(){
     
     
@@ -229,7 +235,7 @@ export class DashComponent implements OnInit {
       datasets: [{
         label: 'Véhicule par ville',
         data: this.ville.map((res:any)=>res.vx),
-        fill: false,
+        fill: true,
         backgroundColor: 'rgba(255, 99, 132, 0.2)',
         borderColor: 'rgb(255, 99, 132)',
         pointBackgroundColor: 'rgb(255, 99, 132)',
@@ -256,11 +262,23 @@ export class DashComponent implements OnInit {
           line: {
             borderWidth: 3
           }
-        }
-      },
+        },
+        scales: {
+          r: {
+          //min: 0, // MIN
+          //max: 5, // MAX
+          beginAtZero: true,
+          angleLines: {
+             display: true,
+             color: 'green',
+          },
+          ticks: {
+           stepSize: 1, // the number of step
+          },
+        },
+      }},
     })
   }
-
   /*polarArea(){
     const data =  {
       labels: [
@@ -305,7 +323,8 @@ export class DashComponent implements OnInit {
     };
     const config = new Chart( 'line',{
       type: 'line',
-      data: data,
+      data: data
+      
     })
   }
 
@@ -314,43 +333,45 @@ export class DashComponent implements OnInit {
     'Traté',
     'En cours'
   ]
+
+
   doughnut(d:any){
     
-     // console.log("dattaaaaa",d);
-      let e = 0
-      let t = 0
-      d.forEach((item:any) => {
-        //console.log(item);
-        
-        if (item.statut==0) {
-          
-          e = e + 1
-        }else{
-          t = t + 1
-        }
-      });
-      this.rec[0]=e
-      this.rec[1]=t
-      
+    // console.log("dattaaaaa",d);
+     let e = 0
+     let t = 0
+     d.forEach((item:any) => {
+       //console.log(item);
+       
+       if (item.statut=='en cours') {
+         
+         e = e + 1
+       }else{
+         t = t + 1
+       }
+     });
+     this.rec[1]=e
+     this.rec[0]=t
+     
 
-    const data = {
-      labels: this.statut,
-      datasets: [{
-        label: 'My First Dataset',
-        data: this.rec,
-        backgroundColor: [
-          
-          'rgb(75, 192, 192)',
-          'rgb(255, 205, 86)'
-        ],
-        hoverOffset: 4
-      }]
-    };
-    const config = new Chart( 'doughnut',{
-      type: 'doughnut',
-      data: data,
-    })
-  }
+   const data = {
+     labels: this.statut,
+     datasets: [{
+       label: 'My First Dataset',
+       data: this.rec,
+       backgroundColor: [
+         
+         'rgb(75, 192, 192)',
+         'rgb(255, 205, 86)'
+       ],
+       hoverOffset: 4
+     }]
+   };
+   const config = new Chart( 'doughnut',{
+     type: 'doughnut',
+     data: data,
+   })
+ }
   
 
 

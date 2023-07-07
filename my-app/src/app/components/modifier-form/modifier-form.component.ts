@@ -50,7 +50,7 @@ export class ModifierFormComponent implements OnInit {
     
     this.showAll();
     this.showAllProduit();
-    this.showRef()
+    //this.showRef()
     
     
     
@@ -155,20 +155,40 @@ export class ModifierFormComponent implements OnInit {
   getReclamation(){
     this.dataservice.getIdReclamation(this.idForm).subscribe(
       (res:any)=>{
-        this.newForm.statut=res.statut
-        this.newForm.dateCreation=res.dateCreation
+        //console.log(res.product.problemes);
+        this.showVehicule(res.device.ville.id)
+        this.showProbleme(res.product.id,res.probleme.id)
+        //this.showSolution(res.probleme.id)
+        this.newForm.dateCreation=res.date_creation
         this.newForm.description=res.description
-        console.log("reclamation ",this.newForm)
+        //console.log("reclamation ",this.newForm)
+        //if (res.refId==0) {
+        this.disableSelect.setValue(false)
+        //}
  
-        this.selected.setValue(res.villeId)
-        this.selectedVehicule.setValue(res.vehiculeId)
-        this.selectedProduit.setValue(res.produitId)
-        this.selectedProbleme.setValue(res.problemeId)
-        this.selectedSolution.setValue(res.solutionId)
-        this.selectedRef.setValue(res.refId)
-        this.showVehicule(this.newForm.villeId)
-        this.showProbleme(this.newForm.produitId)
-        this.showSolution(this.newForm.problemeId)
+        this.selected.setValue(res.device.ville.id)
+        this.selectedVehicule.setValue(res.device.id)
+        this.selectedProduit.setValue(res.product.id)
+        this.selectedProbleme.setValue(res.probleme.id)
+        this.newForm.description=res.description
+
+        
+        
+        //this.selectedRef.setValue(res.refId)
+        
+       
+        
+        
+         
+        if (res.statut=='traite') {
+          // console.log("===",res.solution.id);
+          this.selectedSolution.setValue(res.solution.id)
+          
+        }else{
+          this.newForm.statut=0
+          this.newForm.solutionId=0
+          //this.solution=res.product.problemes[0].solutions
+        }
       }
     )
   }
@@ -189,7 +209,7 @@ export class ModifierFormComponent implements OnInit {
 
   }
 
-  showProbleme(id:any) {
+  showProbleme(id:any,pr:any) {
     
     this.dataservice.getProbleme().subscribe((res:any)=>{
      
@@ -211,7 +231,7 @@ export class ModifierFormComponent implements OnInit {
         
       })
       this.probleme=this.problemeCopy
-      
+      this.showSolution(pr)
     })
     
 
@@ -222,7 +242,7 @@ export class ModifierFormComponent implements OnInit {
     this.dataservice.getSolution().subscribe((res:any)=>{
       
       this.problemeCopy.forEach((p:any) => {
-        console.log("888",p);
+       // console.log("888",p);
         if (p.id==id) {
           
           p.solutions.forEach((sol:any) => {
@@ -241,8 +261,9 @@ export class ModifierFormComponent implements OnInit {
         
         
       })
+
       this.solution=this.solutionCopy
-      console.log("++",this.solutionCopy);
+      //console.log("++",this.solutionCopy);
       
     })
     
@@ -256,10 +277,12 @@ export class ModifierFormComponent implements OnInit {
       (data:any) => {
         this.ville = data,
         this.villeCopy=data
-        console.log(this.ville)
+        //console.log(this.ville)
       }
     )
-    
+    this.dataservice.getUser().subscribe((res:any)=>{
+      this.user= res.filter((item:any)=>item.username==this.idUser)
+    })
 
   }
   showAllProduit() {
@@ -267,7 +290,7 @@ export class ModifierFormComponent implements OnInit {
       (data:any) => {
         this.produit = data,
         this.produitCopy=data
-        console.log(this.produit)
+        //console.log(this.produit)
       }
     )
 
@@ -278,7 +301,7 @@ export class ModifierFormComponent implements OnInit {
       (data:any) => {
         this.ref = data,
         this.refCopy=data
-        console.log(this.ref)
+        //console.log(this.ref)
       }
     )
 
@@ -302,7 +325,7 @@ export class ModifierFormComponent implements OnInit {
         )
         
       })
-      console.log("////",this.vehicule)
+      //console.log("////",this.vehicule)
    
   }
 
@@ -336,7 +359,7 @@ export class ModifierFormComponent implements OnInit {
         
       })
       this.probleme=this.problemeCopy
-      console.log("++",this.problemeCopy);
+      //console.log("++",this.problemeCopy);
       
     })
    
@@ -352,6 +375,8 @@ export class ModifierFormComponent implements OnInit {
       //console.log(this.vehicule)
       this.solutionCopy=[]
       this.probleme.forEach((p:any) => {
+        
+        
         if (p.id==id) {
           p.solutions.forEach((sol:any) => {
             res.forEach((r:any) => {
@@ -368,7 +393,7 @@ export class ModifierFormComponent implements OnInit {
         
       })
       this.solution=this.solutionCopy
-      console.log("++",this.solutionCopy);
+      //console.log("/////////////",this.solutionCopy);
       
     })
    
@@ -390,7 +415,10 @@ export class ModifierFormComponent implements OnInit {
 
   allValid:boolean=true
   Traite:boolean=true
-
+  clearSol(){
+    this.newForm.solutionId=0
+    this.valider()
+  } 
   valider(){
     
     
@@ -461,13 +489,76 @@ export class ModifierFormComponent implements OnInit {
     }
     
   }
-
+  user:any
+  statut:any
   mod(form:any){
-    this.newForm.dateModification=this.curDate
-    this.dataservice.editReclamation(this.newForm).subscribe(()=>{
+    
+    if (this.allValid) {
+      switch (this.newForm.statut) {
+        case 0:
+           this.statut='en cours'
+          break;
+        case 1:
+           this.statut='traite'
+          break;
+      }
+
+      let data
+      if (this.newForm.solutionId==0) {
+        data = {
+          id:this.idForm,
+          device: { id: this.newForm.vehiculeId },
+          product: { id: this.newForm.produitId },
+          probleme: { id:this.newForm.problemeId },
+          solution: { id:4 },
+          statut: this.statut,
+          description: this.newForm.description,
+          date_creation: this.newForm.dateCreation,
+          date_modification: this.newForm.dateModification,
+          client: { id: this.user[0].id }
+        };
+      } else {
+        data = {
+          id:this.idForm,
+          device: { id: this.newForm.vehiculeId },
+          product: { id: this.newForm.produitId },
+          probleme: { id:this.newForm.problemeId },
+          solution: { id:this.newForm.solutionId },
+          statut: this.statut,
+          description: this.newForm.description,
+          date_creation: this.newForm.dateCreation,
+          date_modification: this.newForm.dateModification,
+          client: { id: this.user[0].id }
+        };
+      }
       
-      form = this.newForm
-    })
+      const test = {
+        
+        device: { id: 1 },
+        product: { id: 4 },
+        probleme: { id: 1 },
+        solution: { id: 1 },
+        statut: "traite",
+        description: "Issue with the device ",
+        date_creation: "2023-06-13T10:00:00",
+        date_modification: null,
+        client: { id: 12 }
+          
+      
+      };
+      console.log("555555",data);
+      
+      
+      this.dataservice.editReclamation(data).subscribe(()=>{
+        
+      })
+      
+      
+      
+        
+//        this.uploadFile()
+    }
+    
   }
 
 

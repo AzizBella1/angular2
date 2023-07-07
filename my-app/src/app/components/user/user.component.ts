@@ -25,6 +25,7 @@ export class UserComponent implements OnInit{
 
   hideAdd:boolean=true
   addButton:boolean=true
+  data: any=[]
   add(){
     this.addButton=true
     this.userSelected = {
@@ -53,6 +54,10 @@ export class UserComponent implements OnInit{
   showAll() {
     this.dataservice.getUser().subscribe((res:any)=>{
       this.users=res
+        res.forEach((l:any) => {
+          l.role=l.appRoles[0].roleName
+          
+        });
       this.dataSource = new MatTableDataSource<Element>(this.users)
         
         this.dataSource.paginator = this.paginator;

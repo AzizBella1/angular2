@@ -16,13 +16,26 @@
     display: block;
   }
 
-  @media screen and (max-width: 570px) {
+  
+  @media screen and (min-width: 575px) {
     .logout{
-      position: absolute;left: 100%;
-      bottom: 0;
-      height: 50px;
+      position: absolute;right: 0;
+      margin-right: 8px;
     }
+  
   }
 
+  @media screen and (max-width: 575px) {
+    
+    .logout{
+      display: grid;
+      place-content: end;
+    }
+  
+  }
+
+  .active{
+    color: red;
+  }
 
  

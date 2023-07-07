@@ -1,7 +1,6 @@
 import { HttpClient, HttpEventType, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { NgxImageCompressService } from 'ngx-image-compress';
 import { Observable } from 'rxjs';
 import { DataService } from 'src/app/sevices/data.service';
 
@@ -15,7 +14,7 @@ export class EreurComponent implements OnInit{
   ville: any;
  
 
-  constructor(private uploadService: DataService,private http:HttpClient,private imageCompress: NgxImageCompressService) {}
+  constructor(private uploadService: DataService,private http:HttpClient) {}
   selectedFile:any
 
   reclamation:any=[]
@@ -23,6 +22,7 @@ export class EreurComponent implements OnInit{
     this.rec()
     this.showAll()
     this.getReclamation()
+    this.uploadService.getImage()
   }
  
   name:any = '';
@@ -132,7 +132,7 @@ export class EreurComponent implements OnInit{
     }
 
     
-
+    
     newForm: any
 
     selected:any 
@@ -171,17 +171,7 @@ export class EreurComponent implements OnInit{
     imgResultAfterCompression: string = '';
 
     compressFile() {
-        this.imageCompress.uploadFile().then(({image, orientation}) => {
-            this.imgResultBeforeCompression = image;
-            console.log('Size in bytes of the uploaded image was:', this.imageCompress.byteCount(image));
-
-            this.imageCompress
-                .compressFile(image, orientation, 50, 50) // 50% ratio, 50% quality
-                .then(compressedImage => {
-                    this.imgResultAfterCompression = compressedImage;
-                    console.log('Size in bytes after compression is now:', this.imageCompress.byteCount(compressedImage));
-                });
-        });
+        
     }
 
 

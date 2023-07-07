@@ -30,7 +30,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator'
 import { MatInputModule } from '@angular/material/input';
 
-import { NgChartsModule } from 'ng2-charts';
+
 import {MatIconModule} from '@angular/material/icon';
 import { DashComponent } from './dash/dash.component';
 import { MatGridListModule } from '@angular/material/grid-list';
@@ -41,6 +41,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { MatCheckbox, MatCheckboxModule } from '@angular/material/checkbox';
 import { ReferenceComponent } from './components/reference/reference.component';
+import { NgChartsModule } from 'ng2-charts';
+
 
 
 @NgModule({
@@ -85,7 +87,8 @@ import { ReferenceComponent } from './components/reference/reference.component';
     MatSelectModule,
     MatTableModule,
     NgxMatSelectSearchModule,
-    MatCheckboxModule    
+    MatCheckboxModule   
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

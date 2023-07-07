@@ -387,18 +387,18 @@
   "reclamation": [
     {
       "vehiculeId": 1,
-      "user": 1,
+      "user": "user",
       "villeId": 2,
       "produitId": 5,
       "problemeId": 24,
+      "refId": 2,
       "solutionId": 1,
       "description": "11110111",
+      "file": "",
       "statut": 1,
-      "refId": 2,
+      "dateModification": "2023-06-27T15:55:28.905Z",
       "dateCreation": "2023-02-01T15:59:57.269Z",
-      "id": 1,
-      "dateModification": "2023-06-27T10:44:24.204Z",
-      "file": "th.jfif"
+      "id": 1
     },
     {
       "vehiculeId": 2,
@@ -415,14 +415,17 @@
       "refId": 1
     },
     {
-      "vehiculeId": "21",
-      "user": 1,
-      "villeId": "3",
-      "produitId": "1",
-      "problemeId": "1",
-      "solutionId": 0,
+      "vehiculeId": 9,
+      "user": "user",
+      "villeId": 3,
+      "produitId": 1,
+      "problemeId": 2,
+      "refId": 0,
+      "solutionId": 3,
       "description": "mod",
+      "file": "",
       "statut": 1,
+      "dateModification": "2023-06-27T16:30:17.857Z",
       "dateCreation": "2023-02-01T16:30:19.623Z",
       "id": 3
     },
@@ -926,6 +929,27 @@
       "dateCreation": "2023-06-27T13:16:17.183Z",
       "dateModification": null,
       "id": 39
+    },
+    {
+      "device": {
+        "id": 1
+      },
+      "product": {
+        "id": 4
+      },
+      "probleme": {
+        "id": 1
+      },
+      "solution": {
+        "id": 1
+      },
+      "statut": 1,
+      "date_creation": "2023-07-03T15:23:47.039Z",
+      "date_modification": null,
+      "client": {
+        "id": 12
+      },
+      "id": 40
     }
   ],
   "user": [
@@ -1043,6 +1067,20 @@
       "vehicule": "Moto",
       "immatriculation": "01/A",
       "id": 9
+    },
+    {
+      "name": "AV001",
+      "ville": {
+        "id": "4"
+      },
+      "disabled": 0,
+      "fonction": "voiture",
+      "capteurs": "gps",
+      "typeveh": "voiture",
+      "uniqueid": "123123",
+      "vehicule": "voiture",
+      "immatriculation": "01/b/5452",
+      "id": 10
     }
   ],
   "reference": [

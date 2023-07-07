@@ -2,7 +2,7 @@
 
 <div *ngIf="idUser!=null && is_admin=='ADMIN'" >
 
-    <div *ngIf="hideAdd" class="container py-4"> 
+    <!--<div *ngIf="hideAdd" class="container py-4"> 
        
         <button type="button" style="width: 150px;" (click)="add()" class="btn btn-outline-primary">new</button>
     </div>
@@ -13,9 +13,9 @@
             <div class="form-group py-2">
                 <label class="col-sm-2  col-form-label" for="ville">Ville</label>
                 <div class="col-sm-8">
-                    <select [(ngModel)]="devaice.ville.id" formControlName="ville" required (change)="onChange($event.target)" class="form-control" name="ville" id="">
+                    <select [(ngModel)]="device.ville.id" formControlName="ville" required (change)="onChange($event.target)" class="form-control" name="ville" id="">
                         <option value="0">-</option>
-                        <option *ngFor="let item of ville" [value]="item.id">{{item.name}}</option>
+                        <option *ngFor="let item of Ville" [value]="item.id">{{item.name}}</option>
                     </select>
                     <small *ngIf="selectedville.id==0" id="fileHelpId" style="color: red;" class="form-text"> * champ obligatoire choisir une ville </small>
                 </div>
@@ -24,59 +24,24 @@
             </div>
             <div class="form-group py-2">
                 <label for="vehicule">Nom</label>
-                <input [(ngModel)]="devaice.name" formControlName="name" type="text" name="name" class="form-control" >
+                <input [(ngModel)]="device.name" formControlName="name" type="text" name="name" class="form-control" >
                 <small *ngIf="name.invalid" id="fileHelpId" style="color: red;" class="form-text"> ** </small>
                 
             </div>
-            <div class="form-group py-2">
-                <label for="vehicule">Vehicule</label>
-                <input [(ngModel)]="devaice.vehicule" formControlName="vehicule" type="text" name="vehicule" class="form-control" >
-                <small *ngIf="vehicule.invalid" id="fileHelpId" style="color: red;" class="form-text"> ** </small>
-                
-            </div>
-            <div class="form-group py-2">
-                <label for="uniqueid">Uniqueid</label>
-                <input [(ngModel)]="devaice.uniqueid" formControlName="uniqueid" type="text" name="uniqueid" class="form-control" >
-                <small *ngIf="uniqueid.invalid" id="fileHelpId" style="color: red;" class="form-text"> ** </small>
-                
-            </div>
-            <div class="form-group py-2">
-                <label for="vehicule">Immatriculation</label>
-                <input [(ngModel)]="devaice.immatriculation" formControlName="immatriculation" type="text" name="immatriculation" class="form-control" >
-                <small *ngIf="immatriculation.invalid" id="fileHelpId" style="color: red;" class="form-text"> ** </small>
-                
-            </div>
-            <div class="form-group py-2">
-                <label for="vehicule">Type Véhicule</label>
-                <input [(ngModel)]="devaice.typeveh" formControlName="typeveh" type="text" name="typeveh" class="form-control" >
-                <small *ngIf="typeveh.invalid" id="fileHelpId" style="color: red;" class="form-text"> ** </small>
-                
-            </div>
-            <div class="form-group py-2">
-                <label for="vehicule">Capteurs</label>
-                <input [(ngModel)]="devaice.capteurs" formControlName="capteurs" type="text" name="capteurs" class="form-control" >
-                <small *ngIf="capteurs.invalid" id="fileHelpId" style="color: red;" class="form-text"> ** </small>
-                
-            </div>
-            <div class="form-group py-2">
-                <label for="vehicule">Fonction</label>
-                <input [(ngModel)]="devaice.fonction" formControlName="fonction" type="text" name="fonction" class="form-control" >
-                <small *ngIf="fonction.invalid" id="fileHelpId" style="color: red;" class="form-text"> ** </small>
-                
-            </div>
+            
             <div class="form-group md-5 py-2">
                 
                 <div class="row">
                     <div class="col">
                         <label for="disabled">Disabled</label>
                     </div>
-                    <div class="col"  [ngSwitch]="devaice.disabled">
-                        <input *ngSwitchCase="1" checked [(ngModel)]="devaice.disabled"  formControlName="disabled" type="radio" name="disabled" [value]="1">
-                        <input *ngSwitchCase="0" [(ngModel)]="devaice.disabled"  formControlName="disabled" type="radio" name="disabled" [value]="1">Oui
+                    <div class="col"  [ngSwitch]="device.disabled">
+                        <input *ngSwitchCase="1" checked [(ngModel)]="device.disabled"  formControlName="disabled" type="radio" name="disabled" [value]="1">
+                        <input *ngSwitchCase="0" [(ngModel)]="device.disabled"  formControlName="disabled" type="radio" name="disabled" [value]="1">Oui
                     </div>
-                    <div class="col"  [ngSwitch]="devaice.disabled">
-                        <input *ngSwitchCase="1" [(ngModel)]="devaice.disabled"  formControlName="disabled" type="radio" name="disabled" [value]="0">
-                        <input *ngSwitchCase="0" [(ngModel)]="devaice.disabled" checked formControlName="disabled" type="radio" name="disabled" [value]="0">Non
+                    <div class="col"  [ngSwitch]="device.disabled">
+                        <input *ngSwitchCase="1" [(ngModel)]="device.disabled"  formControlName="disabled" type="radio" name="disabled" [value]="0">
+                        <input *ngSwitchCase="0" [(ngModel)]="device.disabled" checked formControlName="disabled" type="radio" name="disabled" [value]="0">Non
                     </div>
                     <div class="col">
                     </div>
@@ -89,7 +54,7 @@
                 <div class="row">
                     <div class="col">
                         <button *ngIf="addButton" class="btn btn-success btn-block" (click)="addNewVehicule()" [disabled]="addVehicule.invalid || selectedville.id==0" type="submit">Ajouter</button>
-                        <button *ngIf="!addButton" class="btn btn-warning btn-block" (click)="modVehicule(devaice)" [disabled]="addVehicule.invalid || selectedville.id==0" type="submit">Modifier</button>
+                        <button *ngIf="!addButton" class="btn btn-warning btn-block" (click)="modVehicule(device)" [disabled]="addVehicule.invalid || selectedville.id==0" type="submit">Modifier</button>
                     </div>
                     <div class="col">
                         <button class="btn btn-secondary btn-block" (click)="add()" type="submit">Annuler</button>
@@ -101,8 +66,8 @@
         </div>
     </form>
     <hr>
-</div>
-<div class="container">
+</div>-->
+<div class="container" style="margin-top: 30px;">
     <h1>Liste Vehicules</h1>
         <input class="form-control" (keyup)="filter($event.target)" placeholder="Filter">
     
@@ -124,39 +89,16 @@
             <mat-header-cell *matHeaderCellDef mat-sort-header> Nom </mat-header-cell>
             <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
         </ng-container>
-        <ng-container matColumnDef="vehicule">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Véhicule </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.vehicule}} </mat-cell>
+        <ng-container matColumnDef="ville">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Ville </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.ville}} </mat-cell>
         </ng-container>
-        <ng-container matColumnDef="typeveh">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Type Véhicule </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.typeveh}} </mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="fonction">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Fonction </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.fonction}} </mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="uniqueid">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Uniqueid </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.uniqueid}} </mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="capteurs">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Capteurs </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.capteurs}} </mat-cell>
-        </ng-container>
+        
         <ng-container matColumnDef="disabled">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Disabled </mat-header-cell>
             <mat-cell *matCellDef="let element"> {{element.disabled}}</mat-cell>
         </ng-container>
-        <ng-container matColumnDef="mod">
-            <mat-header-cell *matHeaderCellDef> Modifier </mat-header-cell>
-            <mat-cell *matCellDef="let element"> <button (click)="onMod(element)" class="btn btn-primary" >mod</button> </mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="supp">
-            <mat-header-cell *matHeaderCellDef > Supprimer </mat-header-cell>
-            <mat-cell *matCellDef="let element"> <button (click)="onDelete(element.id)" class="btn btn-sm btn-danger" ><mat-icon>delete_forever</mat-icon></button> </mat-cell>
-        </ng-container>
-
+       
         
 
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

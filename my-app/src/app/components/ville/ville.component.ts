@@ -43,6 +43,7 @@ export class VilleComponent implements OnInit {
     
     this.dataservice.getVille().subscribe(
       (data:any) => {
+        
         this.dataSource = new MatTableDataSource<Element>(data)
         
         this.dataSource.paginator = this.paginator;
@@ -70,7 +71,7 @@ export class VilleComponent implements OnInit {
   vehicules:any=[]
 
 
-  displayedColumns = ['id','name','mod','supp'];
+  displayedColumns = ['id','name'];
   dataSource:any = [];
   //name = this.activateRoute.snapshot.paramMap.get('name')
   idUser = sessionStorage.getItem('user');
@@ -85,9 +86,9 @@ export class VilleComponent implements OnInit {
     this.dataservice.addVille( this.villeSelected).subscribe(
       (data:any) => {
         
+        this.showAll()
       }
     )
-    this.ngOnInit()
     this.hideAdd=!this.hideAdd
   }
 

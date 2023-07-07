@@ -14,18 +14,14 @@ import { Vehicule } from 'src/app/models/vehicule';
   styleUrls: ['./vehicule.component.css']
 })
 export class VehiculeComponent implements OnInit {
-  devaice: any={
-    name:'',ville:{id:0},
-    disabled:0,
-    fonction:'',
-    capteurs:'',
-    typeveh:'',
-    uniqueid:'',
-    vehicule:''    
+  device: any={
+    name:'',
+    ville:{id:0},
+    disabled:0   
   }
 
   editVehicule:Vehicule[]=[]
-  ville: any;
+  Ville: any;
   villeTrue:boolean=true
   selectedville: any ={
     id:0,name:''
@@ -35,14 +31,10 @@ export class VehiculeComponent implements OnInit {
   addButton:boolean=true
   add(){
     this.addButton=true
-    this.devaice = {
-      name:'',ville:{id:0},
-      disabled:0,
-      fonction:'',
-      capteurs:'',
-      typeveh:'',
-      uniqueid:'',
-      vehicule:''      
+    this.device = {
+      name:'',
+      ville:{id:0},
+      disabled:0     
 
     }
     
@@ -57,63 +49,53 @@ export class VehiculeComponent implements OnInit {
   constructor(private dataservice:DataService, private activateRoute: ActivatedRoute){}
  
   ngOnInit(): void {
-    this.showAll()
+    this.showAllVille()
     this.getVehicule()
   }
 
   onChange(event:any){
     this.selectedville.id=event.value
   }
-  showAll() {
+  showAllVille() {
     
     this.dataservice.getVille().subscribe(
       (data:any) => {
-        this.ville = data
+        this.Ville = data
       }
     )
 
   }
 
   addVehicule = new FormGroup({
-    vehicule: new FormControl('',[Validators.required, Validators.pattern("[a-z A-Z 0-9]*")]),
+    name: new FormControl('',[Validators.required, Validators.pattern("[a-z A-Z 0-9]*")]),
     ville:new FormControl(),
-    uniqueid:new FormControl('',Validators.required),
-    name:new FormControl('',Validators.required),
-    capteurs:new FormControl('',Validators.required),
-    immatriculation:new FormControl('',Validators.required),
-    fonction:new FormControl('',Validators.required),
-    disabled:new FormControl(),
-    typeveh:new FormControl('',Validators.required)
+    
+    disabled:new FormControl()
+    
   })
 
-  get uniqueid() {
-    return this.addVehicule.controls['uniqueid'];
-  }
+  
   get name() {
     return this.addVehicule.controls['name'];
   }
-  get capteurs() {
-    return this.addVehicule.controls['capteurs'];
+
+  get ville() {
+    return this.addVehicule.controls['ville'];
   }
-  get immatriculation() {
-    return this.addVehicule.controls['immatriculation'];
+
+  get disabled() {
+    return this.addVehicule.controls['disabled'];
   }
-  get vehicule() {
-    return this.addVehicule.controls['vehicule'];
-  }
-  get fonction() {
-    return this.addVehicule.controls['fonction'];
-  }
-  get typeveh() {
-    return this.addVehicule.controls['typeveh'];
-  }
+  
+  
+  
 
 
 
   vehicules:any=[]
 
 
-  displayedColumns = ['id','name','vehicule','typeveh','fonction','uniqueid','capteurs','disabled','mod','supp'];
+  displayedColumns = ['id','name','ville','disabled'];
   dataSource:any = [];
   //name = this.activateRoute.snapshot.paramMap.get('name')
   idUser = sessionStorage.getItem('user');
@@ -125,8 +107,11 @@ export class VehiculeComponent implements OnInit {
   getVehicule() {
     this.dataservice.getVehicule().subscribe(
       (data:any) => {
-        console.log(data);
-        
+        //console.log(data);
+        data.forEach((l:any) => {
+          l.ville=l.ville.name
+          
+        });
         this.dataSource = new MatTableDataSource<Element>(data)
         
         this.dataSource.paginator = this.paginator;
@@ -143,28 +128,23 @@ export class VehiculeComponent implements OnInit {
   addNewVehicule(){
     
     
-    this.dataservice.addVehicule( this.devaice).subscribe(
+    this.dataservice.addVehicule( this.device).subscribe(
       (data:any) => {
         
+        this.getVehicule()
       }
     )
-    this.ngOnInit()
     this.hideAdd=!this.hideAdd
   }
 
   onMod(vehicule:any){
     this.addButton=false
     this.hideAdd=false
-    this.devaice.ville.id = vehicule.ville.id
-    this.devaice.name = vehicule.name
-    this.devaice.id = vehicule.id
-    this.devaice.fonction = vehicule.fonction
-    this.devaice.capteurs = vehicule.capteurs
-    this.devaice.typeveh = vehicule.typeveh
-    this.devaice.uniqueid = vehicule.uniqueid
-    this.devaice.vehicule = vehicule.vehicule
-    this.devaice.immatriculation = vehicule.immatriculation
-    console.log(this.devaice);
+    this.device.ville.id = vehicule.ville.id
+    this.device.name = vehicule.name
+    this.device.id = vehicule.id
+    
+    //console.log(this.device);
     
     
     this.selectedville = {
@@ -174,9 +154,9 @@ export class VehiculeComponent implements OnInit {
 
   modVehicule(vehicule:any){
    
-    this.dataservice.editVehicule(this.devaice).subscribe(()=>{
+    this.dataservice.editVehicule(this.device).subscribe(()=>{
       
-      vehicule = this.devaice
+      vehicule = this.device
       this.getVehicule()
     })
     this.hideAdd=!this.hideAdd

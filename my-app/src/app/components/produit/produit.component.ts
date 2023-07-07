@@ -60,11 +60,11 @@ export class ProduitComponent implements OnInit {
     this.dataservice.getProbleme().subscribe(
       (data:any) => {
         this.probleme = data
-        console.log(data);
+        //console.log(data);
         
       }
     )
-    console.log("111",this.probleme);
+    //console.log("111",this.probleme);
     
 
   }
@@ -126,7 +126,7 @@ export class ProduitComponent implements OnInit {
       
     });
 
-   console.log(this.problemes);
+   //console.log(this.problemes);
    
     
   }
