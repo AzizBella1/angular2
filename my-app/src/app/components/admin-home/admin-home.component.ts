@@ -7,6 +7,7 @@ import { MatInputModule} from '@angular/material/input';
 import { MatSort } from '@angular/material/sort';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Vehicule } from 'src/app/models/vehicule';
+import { Observable, timer } from 'rxjs';
 
 @Component({
   selector: 'app-admin-home',
@@ -230,21 +231,26 @@ export class AdminHomeComponent {
   
   
 
+  
  
   
 
   constructor(private dataservice:DataService,private router: Router){}
- 
+
   ngOnInit(): void {
     //this.router.navigate(['/acceuil'])
     this.showAll()
+    
+    //this.timer.subscribe((t) => this.showAll());
+    
    
   }
+
+  
   
 
   data:any=[]
   showAll() {
-    
     this.dataservice.getReclamation().subscribe(
       (data:any) => {
         
@@ -260,9 +266,11 @@ export class AdminHomeComponent {
         
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort
+        this.acc=true
         
       }
     )
+    this.acctualiser()
 
   }
  
@@ -323,8 +331,8 @@ export class AdminHomeComponent {
 
   acc:boolean=false
   acctualiser(){
-    if (!this.acc) {
-      
+    if (this.acc) {
+      this.router.navigate(['/acceuil'])
     }
   }
 

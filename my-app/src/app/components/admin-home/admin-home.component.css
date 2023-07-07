@@ -17,7 +17,7 @@
     left: 50%;
     top: 30%;
     transform: translate(-50%,-50%);
-    border: 1 solid blanchedalmond;
+    border: 2 solid rgb(10, 10, 10);
     border-radius: 5px;
     background-color:rgb(253, 252, 250) ;
     width: 30%;
@@ -35,7 +35,7 @@
         left: 50%;
         top: 50%;
         transform: translate(-50%,-50%);
-        border: 1 solid blanchedalmond;
+        border: 2 solid rgb(10, 10, 10);
         border-radius: 5px;
         background-color: rgb(253, 252, 250);
         width: 300px;
